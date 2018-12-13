@@ -9,11 +9,14 @@ export default class App extends React.Component {
     super();
     this.state = {
       page: 1,
-      firstname: "",
-      lastname: "",
-      password: "",
-      email: "",
-      mobile: "",
+      values: {
+        firstname: "",
+        lastname: "",
+        password: "",
+        email: "",
+        mobile: "",
+        avatar: ""
+      },
       errors: {
         firstname: false,
         lastname: false,
@@ -48,49 +51,47 @@ export default class App extends React.Component {
   }
 
   onChange = event => {
-    const name = event.target.name;
-    const value = event.target.value;
+    const newValues = {
+      ...this.state.values,
+      [event.target.name]: event.target.value
+    };
     this.setState(prevState => ({
       ...prevState,
-      [name]: value
+      values: newValues
     }));
   };
 
   validateFields = event => {
-    const {
-      page,
-      firstname,
-      lastname,
-      password,
-      repeatPassword,
-      email,
-      mobile
-    } = this.state;
+    const { page, values } = this.state;
+
     const errors = {};
-    if (page == 1) {
-      if (firstname !== null && firstname.length < 5) {
+    if (page === 1) {
+      if (values.firstname !== null && values.firstname.length < 5) {
         errors.firstname = "Firstname is too short";
       }
 
-      if (lastname !== null && lastname.length < 2) {
+      if (values.lastname !== null && values.lastname.length < 2) {
         errors.lastname = "Lastname is too short";
       }
 
-      if (password !== null && password.length < 2) {
+      if (values.password !== null && values.password.length < 2) {
         errors.password = "Password is too short";
       }
 
-      if (repeatPassword !== null && repeatPassword !== password) {
+      if (
+        values.repeatPassword !== null &&
+        values.repeatPassword !== values.password
+      ) {
         errors.repeatPassword = "Passwords must be the same";
       }
     }
 
-    if (page == 2) {
-      if (email !== null && !email.includes("@")) {
+    if (page === 2) {
+      if (values.email !== null && !values.email.includes("@")) {
         errors.email = "Incorrect email";
       }
 
-      if (mobile !== null && mobile.length < 2) {
+      if (values.mobile !== null && values.mobile.length < 2) {
         errors.mobile = "Incorrect mobile";
       }
     }
@@ -115,22 +116,45 @@ export default class App extends React.Component {
     return this.setState(({ page }) => ({ page: page - 1 }));
   };
 
+  componentWillUnmount() {
+    // Remember state for the next mount
+    this.setState({
+      ...this.state
+    });
+  }
+
   render() {
-    const { page, steps, errors } = this.state;
+    const { page, values, errors } = this.state;
     return (
       <div className="form-container card">
-        <StepButtons steps={steps} />
         <form className="form card-body">
-          {page === 1 && <FirstPage onChange={this.onChange} errors={errors} />}
-          {page === 2 && (
-            <SecondPage onChange={this.onChange} errors={errors} />
+          {page === 1 && (
+            <FirstPage
+              values={values}
+              onChange={this.onChange}
+              errors={errors}
+            />
           )}
-          {page === 3 && <ThirdPage onChange={this.onChange} errors={errors} />}
+          {page === 2 && (
+            <SecondPage
+              values={values}
+              onChange={this.onChange}
+              errors={errors}
+            />
+          )}
+          {page === 3 && (
+            <ThirdPage
+              values={values}
+              onChange={this.onChange}
+              errors={errors}
+            />
+          )}
         </form>
         <div>
           <button
             className="btn btn-lg btn-primary btn-block"
             onClick={this.prevPage}
+            disabled={page === 1}
           >
             Назад
           </button>

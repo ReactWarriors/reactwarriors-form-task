@@ -2,10 +2,11 @@ import React from "react";
 import Field from "./Field";
 export default class FirstPage extends React.Component {
   render() {
-    const { onChange, errors } = this.props;
+    const { onChange, errors, values } = this.props;
     return (
       <div>
         <Field
+          values={values.firstname}
           id="firstname"
           labelText="Firstname"
           type="text"
@@ -15,6 +16,7 @@ export default class FirstPage extends React.Component {
           errors={errors.firstname}
         />
         <Field
+          values={values.lastname}
           id="lastname"
           labelText="Lastname"
           type="text"
@@ -24,6 +26,7 @@ export default class FirstPage extends React.Component {
           errors={errors.lastname}
         />
         <Field
+          values={values.password}
           type="password"
           labelText="Password"
           id="password"
