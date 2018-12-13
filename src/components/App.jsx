@@ -2,25 +2,31 @@ import React from "react";
 import FirstPage from "./Pages/FirstPage";
 import SecondPage from "./Pages/SecondPage";
 import ThirdPage from "./Pages/ThirdPage";
-import StepButtons from "./StepButtons";
+import FinishPage from "./Pages/FinishPage";
+import countries from "../data/countries";
+import cities from "../data/cities";
 
 export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
       page: 1,
+      country: null,
+      city: null,
       values: {
         firstname: "",
         lastname: "",
         password: "",
         email: "",
         mobile: "",
-        avatar: ""
+        avatar: "",
+        gender: "male"
       },
       errors: {
         firstname: false,
         lastname: false,
         password: false,
+        repeatPassword: false,
         mobile: false,
         email: false
       },
@@ -55,9 +61,36 @@ export default class App extends React.Component {
       ...this.state.values,
       [event.target.name]: event.target.value
     };
+    const newErrors = {
+      ...this.state.errors,
+      [event.target.name]: false
+    };
     this.setState(prevState => ({
       ...prevState,
-      values: newValues
+      values: newValues,
+      errors: newErrors
+    }));
+  };
+
+  onChangeAvatar = event => {
+    const reader = new FileReader();
+
+    reader.onload = event => {
+      this.onChange({
+        target: {
+          name: "avatar",
+          value: event.target.result
+        }
+      });
+    };
+
+    reader.readAsDataURL(event.target.files[0]);
+  };
+
+  resetPages = () => {
+    this.setState(prevState => ({
+      ...prevState,
+      page: 1
     }));
   };
 
@@ -116,15 +149,24 @@ export default class App extends React.Component {
     return this.setState(({ page }) => ({ page: page - 1 }));
   };
 
-  componentWillUnmount() {
-    // Remember state for the next mount
-    this.setState({
-      ...this.state
-    });
-  }
+  selectCountry = event => {
+    this.setState({ ...this.state, country: event.target.value });
+  };
+
+  selectCity = event => {
+    let towns = [];
+    for (let key in cities) {
+      if (cities[key].country == this.state.country) {
+        // this.setState({ ...this.state, city: event.target.value });
+        towns.push({ id: key, name: cities[key].name });
+      }
+    }
+    console.log(towns);
+    this.setState({ ...this.state, city: [...towns] });
+  };
 
   render() {
-    const { page, values, errors } = this.state;
+    const { page, values, errors, country, city } = this.state;
     return (
       <div className="form-container card">
         <form className="form card-body">
@@ -140,16 +182,32 @@ export default class App extends React.Component {
               values={values}
               onChange={this.onChange}
               errors={errors}
+              country={country}
+              city={city}
+              selectCountry={this.selectCountry}
+              selectCity={this.selectCity}
             />
           )}
           {page === 3 && (
             <ThirdPage
               values={values}
               onChange={this.onChange}
+              onChangeAvatar={this.onChangeAvatar}
               errors={errors}
             />
           )}
+          {page === 4 && (
+            <FinishPage
+              values={values}
+              onChange={this.onChange}
+              errors={errors}
+              country={country}
+              city={city}
+              resetPages={this.resetPages}
+            />
+          )}
         </form>
+
         <div>
           <button
             className="btn btn-lg btn-primary btn-block"
@@ -161,6 +219,7 @@ export default class App extends React.Component {
           <button
             className="btn btn-lg btn-primary btn-block"
             onClick={this.nextPage}
+            disabled={page === 4}
           >
             Вперед
           </button>

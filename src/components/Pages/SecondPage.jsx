@@ -1,28 +1,41 @@
 import React from "react";
 import Field from "./Field";
 import countries from "../../data/countries";
-import cities from "../../data/cities";
-
 export default class SecondPage extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      // country: 1,
-      // city: 1
-      geoLocation: 1
-    };
-  }
+  // <select
+  //   id="city"
+  //   name="city"
+  //   className="custom-select"
+  //   onChange={this.selectCity}
+  // >
+  //   {Object.values(cities)
+  //     .filter(city => city.country === this.state.geoLocation)
+  //     .map(city => (
+  //       <option
+  //         key={city.country}
+  //         value={city.country}
+  //         selected={city.country === this.state.city}
+  //       >
+  //         {city.name}
+  //       </option>
+  //     ))}
+  // </select>
 
-  selectCountry = event => {
-    this.setState({ ...this.state, geoLocation: event.target.value });
-  };
-
-  selectCity = event => {
-    this.setState({ ...this.state, geoLocation: event.target.value });
-  };
+  // <option
+  //   key={}
+  //   value={cities[key]}
+  //   selected={cities[key] === this.state.country}
+  // >
 
   render() {
-    const { onChange, errors } = this.props;
+    const {
+      onChange,
+      errors,
+      selectCity,
+      selectCountry,
+      country,
+      city
+    } = this.props;
     return (
       <div>
         <Field
@@ -49,37 +62,16 @@ export default class SecondPage extends React.Component {
             id="country"
             name="country"
             className="custom-select"
-            onChange={this.selectCountry}
+            onChange={selectCountry}
+            value={country}
           >
             {countries.map(country => (
-              <option
-                key={country.id}
-                value={country.id}
-                selected={country.id === this.state.country}
-              >
+              <option key={country.id} value={country.id}>
                 {country.name}
               </option>
             ))}
           </select>
           <label htmlFor="city">City</label>
-          <select
-            id="city"
-            name="city"
-            className="custom-select"
-            onChange={this.selectCity}
-          >
-            {Object.values(cities)
-              .filter(city => city.country === this.state.geoLocation)
-              .map(city => (
-                <option
-                  key={city.country}
-                  value={city.country}
-                  selected={city.country === this.state.city}
-                >
-                  {city.name}
-                </option>
-              ))}
-          </select>
         </div>
       </div>
     );

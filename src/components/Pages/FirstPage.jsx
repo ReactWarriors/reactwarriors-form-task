@@ -43,7 +43,39 @@ export default class FirstPage extends React.Component {
           placeholder="Repeat password"
           name="repeatPassword"
           onChange={onChange}
+          errors={errors.repeatPassword}
         />
+        <fieldset className="form-group">
+          <div>Gender</div>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="radio"
+              id="male"
+              name="gender"
+              value="male"
+              checked={values.gender === "male"}
+              onChange={onChange}
+            />
+            <label className="form-check-label" htmlFor="male">
+              Male
+            </label>
+          </div>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="radio"
+              id="female"
+              name="gender"
+              value="female"
+              checked={values.gender === "female"}
+              onChange={onChange}
+            />
+            <label className="form-check-label" htmlFor="female">
+              Female
+            </label>
+          </div>
+        </fieldset>
       </div>
     );
   }
