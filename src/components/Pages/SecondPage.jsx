@@ -1,41 +1,10 @@
 import React from "react";
 import Field from "./Field";
 import countries from "../../data/countries";
+import cities from "../../data/cities";
 export default class SecondPage extends React.Component {
-  // <select
-  //   id="city"
-  //   name="city"
-  //   className="custom-select"
-  //   onChange={this.selectCity}
-  // >
-  //   {Object.values(cities)
-  //     .filter(city => city.country === this.state.geoLocation)
-  //     .map(city => (
-  //       <option
-  //         key={city.country}
-  //         value={city.country}
-  //         selected={city.country === this.state.city}
-  //       >
-  //         {city.name}
-  //       </option>
-  //     ))}
-  // </select>
-
-  // <option
-  //   key={}
-  //   value={cities[key]}
-  //   selected={cities[key] === this.state.country}
-  // >
-
   render() {
-    const {
-      onChange,
-      errors,
-      selectCity,
-      selectCountry,
-      country,
-      city
-    } = this.props;
+    const { onChange, errors, selectCity, selectCountry, values } = this.props;
     return (
       <div>
         <Field
@@ -63,7 +32,7 @@ export default class SecondPage extends React.Component {
             name="country"
             className="custom-select"
             onChange={selectCountry}
-            value={country}
+            value={values.country}
           >
             {countries.map(country => (
               <option key={country.id} value={country.id}>
@@ -72,6 +41,13 @@ export default class SecondPage extends React.Component {
             ))}
           </select>
           <label htmlFor="city">City</label>
+          <select
+            id="city"
+            name="city"
+            className="custom-select"
+            onChange={selectCity}
+            value={values.country}
+          />
         </div>
       </div>
     );

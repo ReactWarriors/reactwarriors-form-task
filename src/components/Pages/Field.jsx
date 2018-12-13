@@ -2,7 +2,6 @@ import React from "react";
 
 const Field = props => {
   const {
-    id,
     labelText,
     type,
     placeholder,

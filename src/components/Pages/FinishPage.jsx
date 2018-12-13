@@ -2,7 +2,7 @@ import React from "react";
 
 export default class FinishPage extends React.Component {
   render() {
-    const { onChange, values, country, city, resetPages } = this.props;
+    const { values, resetPages } = this.props;
     return (
       <div class="card" style={{ width: "100%" }}>
         <img class="card-img-top" src={values.avatar} />
@@ -15,7 +15,7 @@ export default class FinishPage extends React.Component {
           <p class="card-text">
             Location: {values.country} {values.city}
           </p>
-          <a href="#" class="btn btn-primary" onClick={resetPages}>
+          <a href="#" className="btn btn-primary" onClick={resetPages}>
             Reset
           </a>
         </div>

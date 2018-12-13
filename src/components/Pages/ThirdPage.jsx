@@ -2,7 +2,7 @@ import React from "react";
 
 export default class ThirdPage extends React.Component {
   render() {
-    const { errors, avatar, onChange, onChangeAvatar, values } = this.props;
+    const { onChangeAvatar, values } = this.props;
     return (
       <div>
         <img className="mb-4" width="100%" src={values.avatar} alt="" />

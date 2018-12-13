@@ -3,17 +3,19 @@ import FirstPage from "./Pages/FirstPage";
 import SecondPage from "./Pages/SecondPage";
 import ThirdPage from "./Pages/ThirdPage";
 import FinishPage from "./Pages/FinishPage";
-import countries from "../data/countries";
+import StepButtons from "./StepButtons";
+
 import cities from "../data/cities";
 
 export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      page: 1,
-      country: null,
-      city: null,
+      page: 2,
+      currentStep: 0,
       values: {
+        country: null,
+        city: null,
         firstname: "",
         lastname: "",
         password: "",
@@ -35,22 +37,26 @@ export default class App extends React.Component {
         {
           id: 0,
           isActive: true,
-          isCompleted: false
+          isCompleted: false,
+          name: "Basic"
         },
         {
           id: 1,
           isActive: false,
-          isCompleted: false
+          isCompleted: false,
+          name: "Contacts"
         },
         {
           id: 2,
           isActive: false,
-          isCompleted: false
+          isCompleted: false,
+          name: "Avatar"
         },
         {
           id: 3,
           isActive: false,
-          isCompleted: false
+          isCompleted: false,
+          name: "Finish"
         }
       ]
     };
@@ -132,6 +138,8 @@ export default class App extends React.Component {
   };
 
   nextPage = event => {
+    const { steps, currentStep } = this.state;
+    console.log(currentStep);
     const errors = this.validateFields();
     if (Object.keys(errors).length > 0) {
       this.setState(prevState => ({
@@ -141,16 +149,36 @@ export default class App extends React.Component {
         }
       }));
     } else {
-      this.setState(({ page }) => ({ page: page + 1 }));
+      const nextStep = currentStep + 1;
+      steps[currentStep].isCompleted = true;
+      steps[currentStep].isActive = false;
+      steps[nextStep].isCompleted = false;
+      steps[nextStep].isActive = true;
+      this.setState(({ page, currentStep }) => ({
+        page: page + 1,
+        currentStep: nextStep
+      }));
     }
   };
 
   prevPage = () => {
-    return this.setState(({ page }) => ({ page: page - 1 }));
+    const { steps, currentStep } = this.state;
+    console.log(currentStep);
+    const prevStep = currentStep - 1;
+    steps[currentStep].isCompleted = true;
+    steps[currentStep].isActive = false;
+    steps[prevStep].isCompleted = true;
+    steps[prevStep].isActive = false;
+    return this.setState(({ page, currentStep }) => ({
+      page: page - 1,
+      currentStep: prevStep
+    }));
   };
 
   selectCountry = event => {
-    this.setState({ ...this.state, country: event.target.value });
+    this.setState({
+      value: { ...this.state.value, country: event.target.value }
+    });
   };
 
   selectCity = event => {
@@ -162,13 +190,14 @@ export default class App extends React.Component {
       }
     }
     console.log(towns);
-    this.setState({ ...this.state, city: [...towns] });
+    this.setState({ value: { ...this.state, city: towns } });
   };
 
   render() {
-    const { page, values, errors, country, city } = this.state;
+    const { page, steps, values, errors, country, city } = this.state;
     return (
       <div className="form-container card">
+        <StepButtons steps={steps} />
         <form className="form card-body">
           {page === 1 && (
             <FirstPage
@@ -182,8 +211,6 @@ export default class App extends React.Component {
               values={values}
               onChange={this.onChange}
               errors={errors}
-              country={country}
-              city={city}
               selectCountry={this.selectCountry}
               selectCity={this.selectCity}
             />
