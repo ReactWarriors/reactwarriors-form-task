@@ -3,19 +3,20 @@ import FirstPage from "./Pages/FirstPage";
 import SecondPage from "./Pages/SecondPage";
 import ThirdPage from "./Pages/ThirdPage";
 import FinishPage from "./Pages/FinishPage";
-import StepButtons from "./StepButtons";
-
+import StepButtons from "./Steps/StepButtons";
 import cities from "../data/cities";
+import {validator} from "./Validation/Validation"
 
 export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      page: 2,
+      page: 1,
       currentStep: 0,
       values: {
         country: null,
         city: null,
+        selectedCities: [],
         firstname: "",
         lastname: "",
         password: "",
@@ -30,7 +31,10 @@ export default class App extends React.Component {
         password: false,
         repeatPassword: false,
         mobile: false,
-        email: false
+        email: false,
+        avatar: false,
+        country: false,
+        city: false
       },
 
       steps: [
@@ -80,7 +84,6 @@ export default class App extends React.Component {
 
   onChangeAvatar = event => {
     const reader = new FileReader();
-
     reader.onload = event => {
       this.onChange({
         target: {
@@ -89,58 +92,71 @@ export default class App extends React.Component {
         }
       });
     };
-
     reader.readAsDataURL(event.target.files[0]);
   };
 
   resetPages = () => {
-    this.setState(prevState => ({
-      ...prevState,
-      page: 1
-    }));
+    this.setState({
+      page: 1,
+      currentStep: 0,
+      values: {
+        country: null,
+        city: null,
+        selectedCities: [],
+        firstname: "",
+        lastname: "",
+        password: "",
+        email: "",
+        mobile: "",
+        avatar: "",
+        gender: "male"
+      },
+      errors: {
+        firstname: false,
+        lastname: false,
+        password: false,
+        repeatPassword: false,
+        mobile: false,
+        email: false,
+        avatar: false,
+        country: false,
+        city: false
+      },
+
+      steps: [
+        {
+          id: 0,
+          isActive: true,
+          isCompleted: false,
+          name: "Basic"
+        },
+        {
+          id: 1,
+          isActive: false,
+          isCompleted: false,
+          name: "Contacts"
+        },
+        {
+          id: 2,
+          isActive: false,
+          isCompleted: false,
+          name: "Avatar"
+        },
+        {
+          id: 3,
+          isActive: false,
+          isCompleted: false,
+          name: "Finish"
+        }
+      ]
+    })
   };
 
-  validateFields = event => {
-    const { page, values } = this.state;
 
-    const errors = {};
-    if (page === 1) {
-      if (values.firstname !== null && values.firstname.length < 5) {
-        errors.firstname = "Firstname is too short";
-      }
 
-      if (values.lastname !== null && values.lastname.length < 2) {
-        errors.lastname = "Lastname is too short";
-      }
-
-      if (values.password !== null && values.password.length < 2) {
-        errors.password = "Password is too short";
-      }
-
-      if (
-        values.repeatPassword !== null &&
-        values.repeatPassword !== values.password
-      ) {
-        errors.repeatPassword = "Passwords must be the same";
-      }
-    }
-
-    if (page === 2) {
-      if (values.email !== null && !values.email.includes("@")) {
-        errors.email = "Incorrect email";
-      }
-
-      if (values.mobile !== null && values.mobile.length < 2) {
-        errors.mobile = "Incorrect mobile";
-      }
-    }
-    return errors;
-  };
-
-  nextPage = event => {
+  nextPage = () => {
     const { steps, currentStep } = this.state;
-    console.log(currentStep);
-    const errors = this.validateFields();
+    const errors = validator(this.state.page, this.state.values);
     if (Object.keys(errors).length > 0) {
       this.setState(prevState => ({
         errors: {
@@ -165,10 +181,10 @@ export default class App extends React.Component {
     const { steps, currentStep } = this.state;
     console.log(currentStep);
     const prevStep = currentStep - 1;
-    steps[currentStep].isCompleted = true;
+    steps[currentStep].isCompleted = false;
     steps[currentStep].isActive = false;
-    steps[prevStep].isCompleted = true;
-    steps[prevStep].isActive = false;
+    steps[prevStep].isCompleted = false;
+    steps[prevStep].isActive = true;
     return this.setState(({ page, currentStep }) => ({
       page: page - 1,
       currentStep: prevStep
@@ -177,24 +193,35 @@ export default class App extends React.Component {
 
   selectCountry = event => {
     this.setState({
-      value: { ...this.state.value, country: event.target.value }
-    });
+        values: { ...this.state.values, country: event.target.value }
+      },
+      () => {
+        this.selectTowns();
+      }
+    );
+  };
+
+  selectTowns = () => {
+    let selectedCities = [];
+    for (let key in cities) {
+      if (cities[key].country == this.state.values.country) {
+        console.log("cities",cities[key])
+        selectedCities.push({ id: key, name: cities[key].name });
+      }
+    }
+    this.setState({ values: { ...this.state.values, selectedCities: selectedCities} });
+    console.log(selectedCities)
   };
 
   selectCity = event => {
-    let towns = [];
-    for (let key in cities) {
-      if (cities[key].country == this.state.country) {
-        // this.setState({ ...this.state, city: event.target.value });
-        towns.push({ id: key, name: cities[key].name });
+    this.setState(
+      {
+        values: { ...this.state.values, city: event.target.value }
       }
-    }
-    console.log(towns);
-    this.setState({ value: { ...this.state, city: towns } });
-  };
-
+    );
+  }
   render() {
-    const { page, steps, values, errors, country, city } = this.state;
+    const { page, steps, values, errors } = this.state;
     return (
       <div className="form-container card">
         <StepButtons steps={steps} />
@@ -212,6 +239,7 @@ export default class App extends React.Component {
               onChange={this.onChange}
               errors={errors}
               selectCountry={this.selectCountry}
+              selectTowns={this.selectTowns}
               selectCity={this.selectCity}
             />
           )}
@@ -228,8 +256,6 @@ export default class App extends React.Component {
               values={values}
               onChange={this.onChange}
               errors={errors}
-              country={country}
-              city={city}
               resetPages={this.resetPages}
             />
           )}

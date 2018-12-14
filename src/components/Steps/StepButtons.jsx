@@ -7,7 +7,7 @@ export default class StepButtons extends React.Component {
       classValue = `${classValue}  is-active`;
     }
     if (step.isCompleted) {
-      classValue = `${classValue}  "is-completed"`;
+      classValue = `${classValue}  is-completed`;
     } else {
       classValue;
     }
@@ -17,15 +17,15 @@ export default class StepButtons extends React.Component {
   render() {
     const { steps } = this.props;
     return (
-      <div className="steps">
+      <div className="steps mb-4 d-flex justify-content-around">
         {steps.map(step => (
-          <button
+          <div
             key={step.id}
-            type="button"
             className={this.setClassName(step)}
           >
-            {step.id + 1}
-          </button>
+          <div className="step__marker">{step.id + 1}</div>
+          <div className="step__title mt-1">{step.name}</div>
+          </div>
         ))}
       </div>
     );

@@ -25,7 +25,7 @@ select.invalid {
   border-color: #dc3545;
 }
 
-.steps {
+/* .steps {
   display: flex;
   justify-content: space-around;
 }
@@ -51,4 +51,68 @@ select.invalid {
 .step.is-active {
   background-color: #19ddfe;
   border: 4px solid #f26120;
+} */
+
+
+
+.step {
+  position: relative;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -ms-flex-preferred-size: 0;
+  flex-basis: 0;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.step,
+.steps {
+  display: -ms-flexbox;
+  display: flex;
+  padding-top: 
+}
+.step.is-active .step__marker {
+  background: #19ddfe;
+  border: 4px solid #f26120;
+}
+.step__marker {
+  width: 35px;
+  height: 35px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 50%;
+  font-weight: 700;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background: #b5b5b5;
+  color: #fff;
+  border: 4px solid #fff;
+  z-index: 1;
+}
+.step__title {
+  font-weight: 700;
+}
+.step:not(:first-child):before {
+  height: 0.2em;
+  width: 100%;
+  bottom: 0;
+  left: -50%;
+  top: 1rem;
+  content: " ";
+  display: block;
+  position: absolute;
+  background: #b5b5b5;
+}
+.step.is-completed .step__marker {
+  background: #f26120;
+  border: 4px solid #f26120;
+}
+.step.is-active:not(:first-child):before {
+  background: #f26120;
+}
+.step.is-completed:not(:first-child):before {
+  background: #f26120;
 }
