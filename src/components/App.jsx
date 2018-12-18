@@ -7,8 +7,6 @@ import StepButtons from "./Steps/StepButtons";
 import cities from "../data/cities";
 import { validator } from "./Validation/Validation";
 
-const hoc = a => a;
-@hoc
 class App extends React.Component {
   constructor() {
     super();
