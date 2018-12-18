@@ -5,9 +5,11 @@ import ThirdPage from "./Pages/ThirdPage";
 import FinishPage from "./Pages/FinishPage";
 import StepButtons from "./Steps/StepButtons";
 import cities from "../data/cities";
-import {validator} from "./Validation/Validation"
+import { validator } from "./Validation/Validation";
 
-export default class App extends React.Component {
+const hoc = a => a;
+@hoc
+class App extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -149,10 +151,8 @@ export default class App extends React.Component {
           name: "Finish"
         }
       ]
-    })
+    });
   };
-
-
 
   nextPage = () => {
     const { steps, currentStep } = this.state;
@@ -192,7 +192,8 @@ export default class App extends React.Component {
   };
 
   selectCountry = event => {
-    this.setState({
+    this.setState(
+      {
         values: { ...this.state.values, country: event.target.value }
       },
       () => {
@@ -205,21 +206,21 @@ export default class App extends React.Component {
     let selectedCities = [];
     for (let key in cities) {
       if (cities[key].country == this.state.values.country) {
-        console.log("cities",cities[key])
+        console.log("cities", cities[key]);
         selectedCities.push({ id: key, name: cities[key].name });
       }
     }
-    this.setState({ values: { ...this.state.values, selectedCities: selectedCities} });
-    console.log(selectedCities)
+    this.setState({
+      values: { ...this.state.values, selectedCities: selectedCities }
+    });
+    console.log(selectedCities);
   };
 
   selectCity = event => {
-    this.setState(
-      {
-        values: { ...this.state.values, city: event.target.value }
-      }
-    );
-  }
+    this.setState({
+      values: { ...this.state.values, city: event.target.value }
+    });
+  };
   render() {
     const { page, steps, values, errors } = this.state;
     return (
@@ -281,3 +282,5 @@ export default class App extends React.Component {
     );
   }
 }
+
+export default App;
