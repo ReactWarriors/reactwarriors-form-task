@@ -51,7 +51,7 @@ export default class SecondPage extends React.Component {
             className="custom-select"
             onChange={selectCity}
             value={values.city}
-            rrors={errors.city}
+            errors={errors.city}
           >
             <option>Choose city</option>
             {values.selectedCities.map(city => (
