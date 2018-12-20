@@ -1,9 +1,28 @@
 import React from "react";
 import Field from "./Field";
 import countries from "../../data/countries";
-export default class SecondPage extends React.Component {
+import { inject, observer } from "mobx-react";
+
+@inject(({ formStore }) => ({
+  values: formStore.values,
+  errors: formStore.errors,
+  onChange: formStore.onChange,
+  getOptionsCities: formStore.getOptionsCities,
+  selectCountry: formStore.selectCountry,
+  selectCity: formStore.selectCity
+}))
+@observer
+class SecondPage extends React.Component {
   render() {
-    const { onChange, errors, selectCity, selectCountry, values } = this.props;
+    const {
+      onChange,
+      errors,
+      selectCity,
+      selectCountry,
+      values,
+      getOptionsCities
+    } = this.props;
+    const optionsCities = getOptionsCities;
     return (
       <div>
         <Field
@@ -32,7 +51,6 @@ export default class SecondPage extends React.Component {
             className="custom-select"
             onChange={selectCountry}
             value={values.country}
-            errors={errors.country}
           >
             <option>Choose country</option>
             {countries.map(country => (
@@ -41,7 +59,9 @@ export default class SecondPage extends React.Component {
               </option>
             ))}
           </select>
-          {errors && <div className="invalid-feedback text-center">{errors.country}</div>}
+          {errors.country && (
+            <div className="invalid-feedback text-center">{errors.country}</div>
+          )}
         </div>
         <div>
           <label htmlFor="city">City</label>
@@ -54,15 +74,19 @@ export default class SecondPage extends React.Component {
             errors={errors.city}
           >
             <option>Choose city</option>
-            {values.selectedCities.map(city => (
+            {optionsCities.map(city => (
               <option key={city.id} value={city.id}>
                 {city.name}
               </option>
             ))}
           </select>
-          {errors && <div className="invalid-feedback text-center">{errors.city}</div>}
+          {errors && (
+            <div className="invalid-feedback text-center">{errors.city}</div>
+          )}
         </div>
       </div>
     );
   }
 }
+
+export default SecondPage;

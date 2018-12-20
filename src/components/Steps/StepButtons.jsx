@@ -1,6 +1,11 @@
 import React from "react";
+import { inject, observer } from "mobx-react";
 
-export default class StepButtons extends React.Component {
+@inject(({ formStore }) => ({
+  steps: formStore.steps
+}))
+@observer
+class StepButtons extends React.Component {
   setClassName = step => {
     let classValue = "step";
     if (step.isActive) {
@@ -28,3 +33,5 @@ export default class StepButtons extends React.Component {
     );
   }
 }
+
+export default StepButtons;

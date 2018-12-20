@@ -1,5 +1,4 @@
-
- export const validator = (page,values) => {
+export const validator = (page, values) => {
   const errors = {};
   if (page === 1) {
     if (values.firstname !== null && values.firstname.length < 5) {
@@ -30,10 +29,10 @@
     if (values.mobile !== null && values.mobile.length < 2) {
       errors.mobile = "Incorrect mobile";
     }
-    if (values.country === "Choose country" || values.country == null ) {
+    if (values.country === "Choose country" || values.country == null) {
       errors.country = "You must choose a country";
     }
-    if (values.city === "Choose city" || values.city == null ) {
+    if (values.city === "Choose city" || values.city == null) {
       errors.city = "You must choose a city";
     }
   }
@@ -43,5 +42,4 @@
     }
   }
   return errors;
-
-}
+};

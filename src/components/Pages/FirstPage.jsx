@@ -1,6 +1,14 @@
 import React from "react";
 import Field from "./Field";
-export default class FirstPage extends React.Component {
+import { inject, observer } from "mobx-react";
+
+@inject(({ formStore }) => ({
+  values: formStore.values,
+  errors: formStore.errors,
+  onChange: formStore.onChange
+}))
+@observer
+class FirstPage extends React.Component {
   render() {
     const { onChange, errors, values } = this.props;
     return (
@@ -80,3 +88,5 @@ export default class FirstPage extends React.Component {
     );
   }
 }
+
+export default FirstPage;
