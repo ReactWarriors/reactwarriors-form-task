@@ -33,9 +33,9 @@ class FinishPage extends React.Component {
           <p className="card-text">Mobile: {values.mobile}</p>
           <p className="card-text">{countryName}</p>
           <p className="card-text">{cityName}</p>
-          <a href="#" className="btn btn-primary" onClick={resetPages}>
+          <button className="btn btn-primary" onClick={resetPages}>
             Reset
-          </a>
+          </button>
         </div>
       </div>
     );

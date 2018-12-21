@@ -5,18 +5,17 @@ import ThirdPage from "./Pages/ThirdPage";
 import FinishPage from "./Pages/FinishPage";
 import StepButtons from "./Steps/StepButtons";
 import { inject, observer } from "mobx-react";
+import Buttons from "./Buttons/Buttons";
 
 @inject(({ formStore }) => {
   return {
-    page: formStore.page,
-    nextPage: formStore.nextPage,
-    prevPage: formStore.prevPage
+    page: formStore.page
   };
 })
 @observer
 class App extends React.Component {
   render() {
-    const { page, prevPage, nextPage } = this.props;
+    const { page } = this.props;
     return (
       <div className="form-container card">
         <StepButtons />
@@ -26,22 +25,7 @@ class App extends React.Component {
           {page === 3 && <ThirdPage />}
           {page === 4 && <FinishPage />}
         </form>
-        <div>
-          <button
-            className="btn btn-lg btn-primary btn-block"
-            onClick={prevPage}
-            disabled={page === 1}
-          >
-            Назад
-          </button>
-          <button
-            className="btn btn-lg btn-primary btn-block"
-            onClick={nextPage}
-            disabled={page === 4}
-          >
-            Вперед
-          </button>
-        </div>
+        <Buttons />
       </div>
     );
   }

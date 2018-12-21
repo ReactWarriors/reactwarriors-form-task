@@ -80,7 +80,7 @@ class SecondPage extends React.Component {
               </option>
             ))}
           </select>
-          {errors && (
+          {errors.city && (
             <div className="invalid-feedback text-center">{errors.city}</div>
           )}
         </div>

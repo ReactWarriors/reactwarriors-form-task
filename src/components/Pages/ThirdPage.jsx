@@ -32,7 +32,7 @@ class ThirdPage extends React.Component {
           <label className="custom-file-label" htmlFor="file">
             Choose avatar
           </label>
-          {errors && (
+          {errors.avatar && (
             <div className="invalid-feedback text-center">{errors.avatar}</div>
           )}
         </div>
