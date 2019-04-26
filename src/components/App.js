@@ -12,6 +12,7 @@ export default class App extends React.Component {
 			email: "",
 			phone: "",
 			password: "",
+			repeatPassword: "",
 			agreeTerms: true,
 			agreeConfidential: true,
 			errors: {
@@ -42,7 +43,7 @@ export default class App extends React.Component {
 	onSubmit = event => {
 		event.preventDefault();
 		const errors = {};
-			let nameRegExp	= /^[a-zа-яієїґ\'\s]{2,30}$/i,
+			let nameRegExp	= /^[a-zа-яієїґ'\s]{2,30}$/i,
 				emailRegExp = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/i,
 				phoneRegExp = /^[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-/\s.]?[0-9]{4}$/;
 
@@ -74,10 +75,6 @@ export default class App extends React.Component {
 			errors.agreeTerms = "You should agree";
 		}
 
-		if (!this.state.agreeConfidential) {
-			errors.agreeConfidential = "You should agree";
-		}
-
 		if (Object.keys(errors).length > 0) {
 			this.setState({
 				errors: errors
@@ -88,15 +85,16 @@ export default class App extends React.Component {
 			});
 
 			console.log("submit", this.state);
-			const {username, userSurname, email, phone, password, repeatPassword, agreeTerms, agreeConfidential} = this.state;
+			const {username, userSurname, email, phone, password, agreeTerms, agreeConfidential} = this.state;
 			fetch('https://httpbin.org/post', {
 				method: 'POST',
 				headers: {
 					'Accept': 'application/json',
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({username, userSurname, email, phone, password, repeatPassword, agreeTerms, agreeConfidential})
+				body: JSON.stringify({name: username, surname: userSurname, email: email, phone: phone, pass: password, terms: agreeTerms, confidential: agreeConfidential})
 			});
+			this.setState({});
 		}
 	};
 
@@ -138,7 +136,7 @@ export default class App extends React.Component {
 						id="phone"
 						labelText="Phone"
 						type="text"
-						placeholder="Enter phone (000)-000-0000"
+						placeholder="Enter phone (000) 000-0000"
 						name="phone"
 						value={this.state.phone}
 						onChange={this.onChange}
@@ -164,23 +162,6 @@ export default class App extends React.Component {
 						onChange={this.onChange}
 						error={this.state.errors.repeatPassword}
 					/>
-{/*							<div className="form-group">
-								<label>Repeat password</label>
-								<input
-									type="text"
-									className="form-control"
-									placeholder="Enter repeat password"
-									ref={node => (this.repeatPassword = node)}
-									name="repeatPassword"
-									value={this.state.repeatPassword}
-									onChange={this.onChange}
-								/>
-								{this.state.errors.repeatPassword ? (
-									<div className="invalid-feedback">
-										{this.state.errors.repeatPassword}
-									</div>
-								) : null}
-							</div>*/}
 					<Check
 						className="form-check-input"
 						type="checkbox"
@@ -200,25 +181,10 @@ export default class App extends React.Component {
 						labelText="Confirm the processing of data"
 						name="agreeConfidential"
 						value={this.state.agreeConfidential}
-						defaultChecked={this.state.agreeConfidential}
 						onChange={this.onCheck}
 						checked={this.state.agreeConfidential}
 						error={this.state.errors.agreeConfidential}
 					/>
-{/*							<div className="form-check mb-2">
-								<input
-									className="form-check-input"
-									type="checkbox"
-									id="agree"
-									name="agree"
-									value={this.state.agree}
-									onChange={this.onChangeAgree}
-									checked={this.state.agree}
-								/>
-								<label className="form-check-label" htmlFor="agree">
-									Confirm the processing of data
-								</label>
-							</div>*/}
 					<button
 						type="submit"
 						className="btn btn-primary w-100"

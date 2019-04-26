@@ -8,8 +8,7 @@ const Check = props => {
     name,
     value,
     checked,
-    defaultChecked,
-    onCheck,
+    onChange,
     error
   } = props;
   return (
@@ -22,7 +21,7 @@ const Check = props => {
         name={name}
         value={value}
         checked={checked}
-        onClick={onCheck}
+        onChange={onChange}
       />
       {error ? <div className="invalid-feedback">{error}</div> : null}
     </div>
