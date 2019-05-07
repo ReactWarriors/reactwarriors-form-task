@@ -12,17 +12,17 @@ const Check = props => {
     error
   } = props;
   return (
-    <div className="form-group">
-      <label htmlFor={id}>{labelText}</label>
+    <div className="form-check">
       <input
         id={id}
         type={type}
-        className="form-control"
+        className="form-check-input"
         name={name}
         value={value}
         checked={checked}
         onChange={onChange}
       />
+      <label htmlFor={id} className="form-check-label">{labelText}</label>
       {error ? <div className="invalid-feedback">{error}</div> : null}
     </div>
   );

@@ -1,6 +1,7 @@
 import React from "react";
 import Field from "./Field";
 import Check from "./Check";
+import Radio from "./Radio";
 
 export default class App extends React.Component {
 	constructor() {
@@ -15,6 +16,7 @@ export default class App extends React.Component {
 			repeatPassword: "",
 			agreeTerms: true,
 			agreeConfidential: true,
+			gender: "male",
 			errors: {
 				username: false,
 				userSurname: false,
@@ -24,7 +26,18 @@ export default class App extends React.Component {
 				repeatPassword: false,
 				agreeTerms: false,
 				agreeConfidential: false,
+			},
+			genders: [{
+				id: "male",
+				value: "male",
+				labelText: "Male"
+			},
+			{
+				id: "female",
+				value: "female",
+				labelText: "Female"
 			}
+			]
 		};
 	}
 
@@ -38,6 +51,13 @@ export default class App extends React.Component {
 		this.setState({
 			[event.target.name]: event.target.checked
 		});
+	};
+
+	onRadio = event => {
+		this.setState({
+			gender: event.target.value
+		});
+		console.log(this.state.gender);
 	};
 
 	onSubmit = event => {
@@ -85,112 +105,152 @@ export default class App extends React.Component {
 			});
 
 			console.log("submit", this.state);
-			const {username, userSurname, email, phone, password, agreeTerms, agreeConfidential} = this.state;
+			const {username, userSurname, email, phone, password, agreeTerms, agreeConfidential, gender} = this.state;
 			fetch('https://httpbin.org/post', {
 				method: 'POST',
 				headers: {
 					'Accept': 'application/json',
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({name: username, surname: userSurname, email: email, phone: phone, pass: password, terms: agreeTerms, confidential: agreeConfidential})
+				body: JSON.stringify({name: username, surname: userSurname, email: email, phone: phone, pass: password, terms: agreeTerms, confidential: agreeConfidential, gender: gender})
 			});
-			this.setState({});
+			this.setState({
+				name: "",
+				surname: "",
+				email: "",
+				phone: "",
+				pass: "",
+				terms: true,
+				confidential: true,
+				gender: "male"
+			});
 		}
 	};
 
 	render() {
 		return (
 			<div className="form-container card">
+				<button>Basic</button> <button>Contacts</button> <button>Avatar</button> <button>Finish</button>
 				<form className="form card-body">
-					<Field
-						id="username"
-						labelText="Username"
-						type="text"
-						placeholder="Enter username"
-						name="username"
-						value={this.state.username}
-						onChange={this.onChange}
-						error={this.state.errors.username}
-					/>
-					<Field
-						id="userSurname"
-						labelText="User Surname"
-						type="text"
-						placeholder="Enter user surname"
-						name="userSurname"
-						value={this.state.userSurname}
-						onChange={this.onChange}
-						error={this.state.errors.userSurname}
-					/>
-					<Field
-						id="email"
-						labelText="Email"
-						type="text"
-						placeholder="Enter email"
-						name="email"
-						value={this.state.email}
-						onChange={this.onChange}
-						error={this.state.errors.email}
-					/>
-					<Field
-						id="phone"
-						labelText="Phone"
-						type="text"
-						placeholder="Enter phone (000) 000-0000"
-						name="phone"
-						value={this.state.phone}
-						onChange={this.onChange}
-						error={this.state.errors.phone}
-					/>
-					<Field
-						id="password"
-						labelText="Password"
-						type="password"
-						placeholder="Enter password"
-						name="password"
-						value={this.state.password}
-						onChange={this.onChange}
-						error={this.state.errors.password}
-					/>
-					<Field
-						id="repeatPassword"
-						labelText="Repeat password"
-						type="password"
-						placeholder="Repeat password"
-						name="repeatPassword"
-						value={this.state.repeatPassword}
-						onChange={this.onChange}
-						error={this.state.errors.repeatPassword}
-					/>
-					<Check
-						className="form-check-input"
-						type="checkbox"
-						id="agreeTerms"
-						labelText="Confirm the Terms"
-						name="agreeTerms"
-						value={this.state.agreeTerms}
-						defaultChecked={this.state.agreeTerms}
-						onChange={this.onCheck}
-						checked={this.state.agreeTerms}
-						error={this.state.errors.agreeTerms}
-					/>
-					<Check
-						className="form-check-input"
-						type="checkbox"
-						id="agreeConfidential"
-						labelText="Confirm the processing of data"
-						name="agreeConfidential"
-						value={this.state.agreeConfidential}
-						onChange={this.onCheck}
-						checked={this.state.agreeConfidential}
-						error={this.state.errors.agreeConfidential}
-					/>
+					<div className="step">
+						<h2>Step 01</h2>
+						<Field
+							id="username"
+							labelText="Firstname"
+							type="text"
+							placeholder="Enter firstname"
+							name="username"
+							value={this.state.username}
+							onChange={this.onChange}
+							error={this.state.errors.username}
+						/>
+						<Field
+							id="userSurname"
+							labelText="Lastname"
+							type="text"
+							placeholder="Enter lastname"
+							name="userSurname"
+							value={this.state.userSurname}
+							onChange={this.onChange}
+							error={this.state.errors.userSurname}
+						/>
+						<Field
+							id="password"
+							labelText="Password"
+							type="password"
+							placeholder="Enter password"
+							name="password"
+							value={this.state.password}
+							onChange={this.onChange}
+							error={this.state.errors.password}
+						/>
+						<Field
+							id="repeatPassword"
+							labelText="Repeat password"
+							type="password"
+							placeholder="Repeat password"
+							name="repeatPassword"
+							value={this.state.repeatPassword}
+							onChange={this.onChange}
+							error={this.state.errors.repeatPassword}
+						/>
+						<Radio
+							className="form-check-input"
+							id="gender"
+							labelText="Gender"
+							name="gender"
+							selectedValue={this.state.gender}
+							onChange={this.onRadio}
+							options={this.state.genders}
+
+						/>
+					</div>
+					<div className="step" style={{display: "none"}}>
+						<h2>Step 02</h2>
+						<Field
+							id="email"
+							labelText="Email"
+							type="text"
+							placeholder="Enter email"
+							name="email"
+							value={this.state.email}
+							onChange={this.onChange}
+							error={this.state.errors.email}
+						/>
+						<Field
+							id="phone"
+							labelText="Phone"
+							type="text"
+							placeholder="Enter phone (000) 000-0000"
+							name="phone"
+							value={this.state.phone}
+							onChange={this.onChange}
+							error={this.state.errors.phone}
+						/>
+						<Check
+							className="form-check-input"
+							type="checkbox"
+							id="agreeTerms"
+							labelText="Confirm the Terms"
+							name="agreeTerms"
+							value={this.state.agreeTerms}
+							defaultChecked={this.state.agreeTerms}
+							onChange={this.onCheck}
+							checked={this.state.agreeTerms}
+							error={this.state.errors.agreeTerms}
+						/>
+						<Check
+							className="form-check-input"
+							type="checkbox"
+							id="agreeConfidential"
+							labelText="Confirm the processing of data"
+							name="agreeConfidential"
+							value={this.state.agreeConfidential}
+							onChange={this.onCheck}
+							checked={this.state.agreeConfidential}
+							error={this.state.errors.agreeConfidential}
+						/>
+						<button
+							type="submit"
+							className="btn btn-primary w-100"
+							onClick={this.onSubmit}
+						>
+							Submit
+						</button>
+					</div>
 					<button
-						type="submit"
+						type="button"
 						className="btn btn-primary w-100"
-						onClick={this.onSubmit}
+						onClick={this.onPrevious}
 					>
-						Submit
+						Previous
+					</button>
+					<button
+						type="button"
+						className="btn btn-primary w-100"
+						onClick={this.onNext}
+					>
+						Next
 					</button>
 				</form>
 			</div>
