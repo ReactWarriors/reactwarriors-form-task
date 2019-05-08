@@ -4,9 +4,84 @@ body {
 
 .form-container {
   width: 460px;
-  margin: 0 auto;
+  margin: 10px auto;
 }
 
 .invalid-feedback {
   display: block; 
+}
+.step__list{
+	margin: 0;
+	padding: 10px 40px;
+	display: flex;
+	justify-content: space-between;
+}
+.step__list li{
+	list-style: none;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	position: relative;
+	width: 25%;
+}
+.step__list li:before{
+	content: '1';
+	height: 30px;
+	width: 30px;
+	display: block;
+	border-radius: 50%;
+	border: 3px solid orange;
+	background-color: orange;
+	color: white;
+	text-align: center;
+	position: relative;
+	z-index: 2;
+}
+.step__list li:nth-child(2):before{
+	content: '2';
+}
+.step__list li:nth-child(3):before{
+	content: '3';
+}
+.step__list li:nth-child(4):before{
+	content: '4';
+}
+.step__list li:after{
+	content: '';
+	height: 3px;
+	width: 100%;
+	position: absolute;
+	left: 50%;
+	top: 15px;
+	background-color: orange;
+}
+.step__list li:last-child:after{
+	display: none;
+}
+.step__list li.active:before{
+	border: 3px solid orange;
+	background-color: lightblue;
+}
+.step__list li.active:after{
+	background-color: lightgrey;
+}
+.step__list li.active ~ li:before{
+	border: 3px solid white;
+	background-color: lightgrey;
+}
+.step__list li.active ~ li:after{
+	background-color: lightgrey;
+}
+.step__list li.visited:before{
+	border: 3px solid orange;
+	background-color: orange;
+}
+
+.step{
+	display: none;
+}
+.step.active{
+	display: block;
 }

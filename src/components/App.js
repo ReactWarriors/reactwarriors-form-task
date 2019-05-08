@@ -8,6 +8,7 @@ export default class App extends React.Component {
 		super();
 
 		this.state = {
+			activeStep: 2,
 			username: "",
 			userSurname: "",
 			email: "",
@@ -37,10 +38,14 @@ export default class App extends React.Component {
 				value: "female",
 				labelText: "Female"
 			}
-			]
+			],
 		};
 	}
-
+	componentDidMount() {
+		let self = this;
+		let stepList = document.querySelectorAll('.step__list li');
+		stepList.forEach((item, i) => { if (i === self.state.activeStep) item.classList.add('active')});
+	};
 	onChange = event => {
 		this.setState({
 			[event.target.name]: event.target.value
@@ -130,10 +135,14 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<div className="form-container card">
-				<button>Basic</button> <button>Contacts</button> <button>Avatar</button> <button>Finish</button>
+				<ul className="step__list">
+					<li>Basic</li>
+					<li>Contacts</li>
+					<li>Avatar</li>
+					<li>Finish</li>
+				</ul>	
 				<form className="form card-body">
-					<div className="step">
-						<h2>Step 01</h2>
+					<div className="step active">
 						<Field
 							id="username"
 							labelText="Firstname"
@@ -185,7 +194,7 @@ export default class App extends React.Component {
 
 						/>
 					</div>
-					<div className="step" style={{display: "none"}}>
+					<div className="step">
 						<h2>Step 02</h2>
 						<Field
 							id="email"
