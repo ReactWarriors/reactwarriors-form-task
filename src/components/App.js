@@ -1,23 +1,27 @@
 import React from "react";
+import countries from "../data/countries";
+import cities from "../data/cities";
 import Field from "./Field";
 import Check from "./Check";
 import Radio from "./Radio";
+import Selector from "./Selector";
 
 export default class App extends React.Component {
 	constructor() {
 		super();
 
 		this.state = {
-			activeStep: 2,
+			activeStep: 0,
 			username: "",
 			userSurname: "",
 			email: "",
 			phone: "",
 			password: "",
 			repeatPassword: "",
-			agreeTerms: true,
 			agreeConfidential: true,
 			gender: "male",
+			country: "0",
+			city: "0",
 			errors: {
 				username: false,
 				userSurname: false,
@@ -25,30 +29,45 @@ export default class App extends React.Component {
 				phone: false,
 				password: false,
 				repeatPassword: false,
-				agreeTerms: false,
 				agreeConfidential: false,
 			},
+			countries: countries,
+			cities: [],
 			genders: [{
-				id: "male",
-				value: "male",
-				labelText: "Male"
-			},
-			{
-				id: "female",
-				value: "female",
-				labelText: "Female"
-			}
+					id: "male",
+					value: "male",
+					labelText: "Male"
+				},
+				{
+					id: "female",
+					value: "female",
+					labelText: "Female"
+				},
 			],
+			avatar: "",
 		};
 	}
 	componentDidMount() {
+		this.init();
+	};
+	init = () => {
 		let self = this;
-		let stepList = document.querySelectorAll('.step__list li');
-		stepList.forEach((item, i) => { if (i === self.state.activeStep) item.classList.add('active')});
+		let stepLinks = document.querySelectorAll('.step__list li');
+		let steps = document.querySelectorAll('.step');
+		stepLinks.forEach((item, i) => { if (i === self.state.activeStep) {item.classList.add('active')} else {item.classList.remove('active')}});
+		steps.forEach((item, i) => { if (i === self.state.activeStep) {item.classList.add('active')} else {item.classList.remove('active')}});
 	};
 	onChange = event => {
 		this.setState({
 			[event.target.name]: event.target.value
+		});
+	};
+
+	onChangeCountry = event => {
+		this.setState({
+			[event.target.name]: event.target.value,
+			'cities': cities.filter(item => item.country === parseInt(event.target.value)),
+			city: "0"
 		});
 	};
 
@@ -63,6 +82,16 @@ export default class App extends React.Component {
 			gender: event.target.value
 		});
 		console.log(this.state.gender);
+	};
+
+	onChangeAvatar = event => {
+		const reader = new FileReader();
+		reader.onload = event => {
+			this.setState({
+				avatar: event.target.result
+			});
+		};
+		reader.readAsDataURL(event.target.files[0]);
 	};
 
 	onSubmit = event => {
@@ -96,8 +125,16 @@ export default class App extends React.Component {
 			errors.repeatPassword = "Must be equal password";
 		}
 
-		if (!this.state.agreeTerms) {
-			errors.agreeTerms = "You should agree";
+		if (!this.state.agreeConfidential) {
+			errors.agreeConfidential = "You should agree";
+		}
+
+		if (this.state.country === "0") {
+			errors.country = "Choose country";
+		}
+
+		if (this.state.city === "0") {
+			errors.city = "Choose city";
 		}
 
 		if (Object.keys(errors).length > 0) {
@@ -110,14 +147,14 @@ export default class App extends React.Component {
 			});
 
 			console.log("submit", this.state);
-			const {username, userSurname, email, phone, password, agreeTerms, agreeConfidential, gender} = this.state;
+			const {username, userSurname, email, phone, password, agreeConfidential, gender, country, city, avatar} = this.state;
 			fetch('https://httpbin.org/post', {
 				method: 'POST',
 				headers: {
 					'Accept': 'application/json',
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({name: username, surname: userSurname, email: email, phone: phone, pass: password, terms: agreeTerms, confidential: agreeConfidential, gender: gender})
+				body: JSON.stringify({name: username, surname: userSurname, email: email, phone: phone, pass: password, gender: gender, country: country, city: city, agree: agreeConfidential, avatar: avatar})
 			});
 			this.setState({
 				name: "",
@@ -125,9 +162,11 @@ export default class App extends React.Component {
 				email: "",
 				phone: "",
 				pass: "",
-				terms: true,
-				confidential: true,
-				gender: "male"
+				gender: "male",
+				agreeConfidential: true,
+				country: "0",
+				city: "0",
+				avatar: ""
 			});
 		}
 	};
@@ -191,7 +230,6 @@ export default class App extends React.Component {
 							selectedValue={this.state.gender}
 							onChange={this.onRadio}
 							options={this.state.genders}
-
 						/>
 					</div>
 					<div className="step">
@@ -208,25 +246,31 @@ export default class App extends React.Component {
 						/>
 						<Field
 							id="phone"
-							labelText="Phone"
+							labelText="Mobile"
 							type="text"
-							placeholder="Enter phone (000) 000-0000"
+							placeholder="Enter mobile (000) 000-0000"
 							name="phone"
 							value={this.state.phone}
 							onChange={this.onChange}
 							error={this.state.errors.phone}
 						/>
-						<Check
-							className="form-check-input"
-							type="checkbox"
-							id="agreeTerms"
-							labelText="Confirm the Terms"
-							name="agreeTerms"
-							value={this.state.agreeTerms}
-							defaultChecked={this.state.agreeTerms}
-							onChange={this.onCheck}
-							checked={this.state.agreeTerms}
-							error={this.state.errors.agreeTerms}
+						<Selector
+							className="form-control"
+							id="country"
+							labelText="Country"
+							name="country"
+							value={this.state.country}
+							options={this.state.countries}
+							onChange={this.onChangeCountry}
+						/>
+						<Selector
+							className="form-control"
+							id="city"
+							labelText="City"
+							name="city"
+							value={this.state.city}
+							options={this.state.cities}
+							onChange={this.onChange}
 						/>
 						<Check
 							className="form-check-input"
@@ -239,13 +283,19 @@ export default class App extends React.Component {
 							checked={this.state.agreeConfidential}
 							error={this.state.errors.agreeConfidential}
 						/>
-						<button
-							type="submit"
-							className="btn btn-primary w-100"
-							onClick={this.onSubmit}
-						>
-							Submit
-						</button>
+					</div>
+					<div className="step">
+						<h2>Step 03</h2>
+						<div className="form-group">
+							<label htmlFor="avatar">Avatar</label>
+							<input
+								type="file"
+								className="form-control-file"
+								id="avatar"
+								name="avatar"
+								onChange={this.onChangeAvatar}
+							/>
+						</div>
 					</div>
 					<button
 						type="button"
@@ -260,6 +310,13 @@ export default class App extends React.Component {
 						onClick={this.onNext}
 					>
 						Next
+					</button>
+					<button
+						type="submit"
+						className="btn btn-primary w-100"
+						onClick={this.onSubmit}
+					>
+						Submit
 					</button>
 				</form>
 			</div>
