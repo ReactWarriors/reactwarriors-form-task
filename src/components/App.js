@@ -12,6 +12,12 @@ export default class App extends React.Component {
 
 		this.state = {
 			activeStep: 0,
+			steps: [
+				{id: 0,	name: 'Basic'},
+				{id: 1,	name: 'Contacts'},
+				{id: 2,	name: 'Avatar'},
+				{id: 3, name: 'Finish'},
+			],
 			username: "",
 			userSurname: "",
 			email: "",
@@ -47,16 +53,7 @@ export default class App extends React.Component {
 			avatar: "",
 		};
 	}
-	componentDidMount() {
-		this.init();
-	};
-	init = () => {
-		let self = this;
-		let stepLinks = document.querySelectorAll('.step__list li');
-		let steps = document.querySelectorAll('.step');
-		stepLinks.forEach((item, i) => { if (i === self.state.activeStep) {item.classList.add('active')} else {item.classList.remove('active')}});
-		steps.forEach((item, i) => { if (i === self.state.activeStep) {item.classList.add('active')} else {item.classList.remove('active')}});
-	};
+
 	onChange = event => {
 		this.setState({
 			[event.target.name]: event.target.value
@@ -100,41 +97,40 @@ export default class App extends React.Component {
 			let nameRegExp	= /^[a-zа-яієїґ'\s]{2,30}$/i,
 				emailRegExp = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/i,
 				phoneRegExp = /^[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-/\s.]?[0-9]{4}$/;
-
-		if (this.state.username.length < 3 && !nameRegExp.test(this.state.username)) {
-			errors.username = "Must be 3 characters or more, only letters";
-		}
-
-		if (this.state.userSurname.length < 3 && !nameRegExp.test(this.state.userSurname)) {
-			errors.userSurname = "Must be 3 characters or more";
-		}
-
-		if (!emailRegExp.test(this.state.email)) {
-			errors.email = "Must be symbol @";
-		}
-
-		if (!phoneRegExp.test(this.state.phone)) {
-			errors.phone = "Must be only digitals and +";
-		}
-
-		if (this.state.password < 3) {
-			errors.password = "Must be 3 characters or more";
-		}
-
-		if (this.state.password !== this.state.repeatPassword) {
-			errors.repeatPassword = "Must be equal password";
-		}
-
-		if (!this.state.agreeConfidential) {
-			errors.agreeConfidential = "You should agree";
-		}
-
-		if (this.state.country === "0") {
-			errors.country = "Choose country";
-		}
-
-		if (this.state.city === "0") {
-			errors.city = "Choose city";
+		switch (this.state.activeStep) {
+			case 0: 
+				if (this.state.username.length < 3 && !nameRegExp.test(this.state.username)) {
+					errors.username = "Must be 3 characters or more, only letters";
+				}
+				if (this.state.userSurname.length < 3 && !nameRegExp.test(this.state.userSurname)) {
+					errors.userSurname = "Must be 3 characters or more";
+				}
+				if (this.state.password < 3) {
+					errors.password = "Must be 3 characters or more";
+				}
+				if (this.state.password !== this.state.repeatPassword) {
+					errors.repeatPassword = "Must be equal password";
+				}
+				break;
+			case 1: 
+				if (!emailRegExp.test(this.state.email)) {
+					errors.email = "Must be symbol @";
+				}
+				if (!phoneRegExp.test(this.state.phone)) {
+					errors.phone = "Must be only digitals and +";
+				}
+				if (this.state.country === "0") {
+					errors.country = "Choose country";
+				}
+				if (this.state.city === "0") {
+					errors.city = "Choose city";
+				}
+				break;
+			case 2:
+				if (!this.state.agreeConfidential) {
+					errors.agreeConfidential = "You should agree";
+				}
+				break;
 		}
 
 		if (Object.keys(errors).length > 0) {
@@ -175,13 +171,14 @@ export default class App extends React.Component {
 		return (
 			<div className="form-container card">
 				<ul className="step__list">
-					<li>Basic</li>
-					<li>Contacts</li>
-					<li>Avatar</li>
-					<li>Finish</li>
+					{
+						this.state.steps.map(item => {
+							return <li key={item.id} className={this.state.activeStep === item.id ? 'active' : ''}>{item.name}</li>
+						})
+					}
 				</ul>	
 				<form className="form card-body">
-					<div className="step active">
+					<div className={`step ${this.state.activeStep === 0 ? 'active' : ''}`}>
 						<Field
 							id="username"
 							labelText="Firstname"
@@ -232,8 +229,7 @@ export default class App extends React.Component {
 							options={this.state.genders}
 						/>
 					</div>
-					<div className="step">
-						<h2>Step 02</h2>
+					<div className={`step ${this.state.activeStep === 1 ? 'active' : ''}`}>
 						<Field
 							id="email"
 							labelText="Email"
@@ -284,8 +280,7 @@ export default class App extends React.Component {
 							error={this.state.errors.agreeConfidential}
 						/>
 					</div>
-					<div className="step">
-						<h2>Step 03</h2>
+					<div className={`step ${this.state.activeStep === 2 ? 'active' : ''}`}>
 						<div className="form-group">
 							<label htmlFor="avatar">Avatar</label>
 							<input
@@ -297,27 +292,36 @@ export default class App extends React.Component {
 							/>
 						</div>
 					</div>
-					<button
-						type="button"
-						className="btn btn-primary w-100"
-						onClick={this.onPrevious}
-					>
-						Previous
-					</button>
-					<button
-						type="button"
-						className="btn btn-primary w-100"
-						onClick={this.onNext}
-					>
-						Next
-					</button>
-					<button
-						type="submit"
-						className="btn btn-primary w-100"
-						onClick={this.onSubmit}
-					>
-						Submit
-					</button>
+					<div className={`step ${this.state.activeStep === 3 ? 'active' : ''}`}>
+						<div>Avatar</div>
+						<div>{this.state.username} {this.state.userSurname}</div>
+						<div>Email: {this.state.email}</div>
+						<div>Mobile: {this.state.phone}</div>
+						<div>Location: {this.state.country}, {this.state.city}</div>
+						<button
+							type="button"
+							className="btn btn-primary w-100"
+							onClick={this.onReset}
+						>
+							Reset
+						</button>	
+					</div>
+					<div class='d-flex justify-content-center'>
+						<button
+							type="button"
+							className="btn btn-primary m-2 disabled"
+							onClick={this.onPrevious}
+						>
+							Previous
+						</button>
+						<button
+							type="button"
+							className="btn btn-primary m-2"
+							onClick={this.onNext}
+						>
+							Next
+						</button>
+					</div>
 				</form>
 			</div>
 		);
