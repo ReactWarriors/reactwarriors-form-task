@@ -28,6 +28,7 @@ export default class App extends React.Component {
 			gender: "male",
 			country: "0",
 			city: "0",
+			avatar: "",
 			errors: {
 				username: false,
 				userSurname: false,
@@ -50,7 +51,6 @@ export default class App extends React.Component {
 					labelText: "Female"
 				},
 			],
-			avatar: "",
 		};
 	}
 
@@ -89,6 +89,28 @@ export default class App extends React.Component {
 			});
 		};
 		reader.readAsDataURL(event.target.files[0]);
+	};
+
+	onPrev = () => {
+		if (this.state.activeStep > 0) this.setState({activeStep: this.state.activeStep - 1})
+	};
+
+	onReset = () => {
+		this.setState({
+			activeStep: 0,
+			username: "",
+			userSurname: "",
+			email: "",
+			phone: "",
+			password: "",
+			repeatPassword: "",
+			agreeConfidential: true,
+			gender: "male",
+			country: "0",
+			city: "0",
+			avatar: "",
+			errors: {}
+		});
 	};
 
 	onSubmit = event => {
@@ -131,39 +153,17 @@ export default class App extends React.Component {
 					errors.agreeConfidential = "You should agree";
 				}
 				break;
-		}
-
-		if (Object.keys(errors).length > 0) {
-			this.setState({
-				errors: errors
+			}
+			if (Object.keys(errors).length > 0) {
+				this.setState({
+					errors: errors
+				});
+			} else {
+				this.setState({
+					errors: {}
 			});
-		} else {
-			this.setState({
-				errors: {}
-			});
-
 			console.log("submit", this.state);
-			const {username, userSurname, email, phone, password, agreeConfidential, gender, country, city, avatar} = this.state;
-			fetch('https://httpbin.org/post', {
-				method: 'POST',
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({name: username, surname: userSurname, email: email, phone: phone, pass: password, gender: gender, country: country, city: city, agree: agreeConfidential, avatar: avatar})
-			});
-			this.setState({
-				name: "",
-				surname: "",
-				email: "",
-				phone: "",
-				pass: "",
-				gender: "male",
-				agreeConfidential: true,
-				country: "0",
-				city: "0",
-				avatar: ""
-			});
+			if (this.state.activeStep < this.state.steps.length) this.setState({activeStep: this.state.activeStep + 1})
 		}
 	};
 
@@ -258,6 +258,7 @@ export default class App extends React.Component {
 							value={this.state.country}
 							options={this.state.countries}
 							onChange={this.onChangeCountry}
+							error={this.state.errors.country}
 						/>
 						<Selector
 							className="form-control"
@@ -267,7 +268,22 @@ export default class App extends React.Component {
 							value={this.state.city}
 							options={this.state.cities}
 							onChange={this.onChange}
+							error={this.state.errors.city}
 						/>
+					</div>
+					<div className={`step ${this.state.activeStep === 2 ? 'active' : ''}`}>
+						<div className="form-group">
+							<div className="custom-file">
+								<input
+									type="file"
+									className="custom-file-input"
+									id="avatar"
+									name="avatar"
+									onChange={this.onChangeAvatar}
+								/>
+								<label className="custom-file-label" htmlFor="avatar">Choose file</label>
+							</div>
+						</div>
 						<Check
 							className="form-check-input"
 							type="checkbox"
@@ -279,18 +295,6 @@ export default class App extends React.Component {
 							checked={this.state.agreeConfidential}
 							error={this.state.errors.agreeConfidential}
 						/>
-					</div>
-					<div className={`step ${this.state.activeStep === 2 ? 'active' : ''}`}>
-						<div className="form-group">
-							<label htmlFor="avatar">Avatar</label>
-							<input
-								type="file"
-								className="form-control-file"
-								id="avatar"
-								name="avatar"
-								onChange={this.onChangeAvatar}
-							/>
-						</div>
 					</div>
 					<div className={`step ${this.state.activeStep === 3 ? 'active' : ''}`}>
 						<div>Avatar</div>
@@ -306,18 +310,19 @@ export default class App extends React.Component {
 							Reset
 						</button>	
 					</div>
-					<div class='d-flex justify-content-center'>
+					<div className={this.state.activeStep === (this.state.steps.length - 1) ? 'hidden' : ''}>
 						<button
 							type="button"
-							className="btn btn-primary m-2 disabled"
-							onClick={this.onPrevious}
+							className="btn btn-primary m-2"
+							onClick={this.onPrev}
+							disabled={!this.state.activeStep}
 						>
 							Previous
 						</button>
 						<button
 							type="button"
 							className="btn btn-primary m-2"
-							onClick={this.onNext}
+							onClick={this.onSubmit}
 						>
 							Next
 						</button>

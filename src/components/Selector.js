@@ -7,7 +7,8 @@ const Selector = props => {
 		name,
 		value,
 		options,
-		onChange
+		onChange,
+		error
 	} = props;
 	const getOptionsItems = () => {
 		return options.map((item, i) => (
@@ -29,6 +30,7 @@ const Selector = props => {
 			<option key="0" value="0" disabled>Select {name}</option>
 			{getOptionsItems()}
 			</select>
+			{error ? <div className="invalid-feedback">{error}</div> : null}
 		</div>
 	);
 };
