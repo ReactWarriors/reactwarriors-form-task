@@ -1,7 +1,9 @@
 body {
   background: #fdfdfd; 
 }
-
+img {
+	max-width: 100%;
+}
 .form-container {
   width: 460px;
   margin: 10px auto;
@@ -87,4 +89,8 @@ body {
 }
 .hidden{
 	display: none;
+}
+
+.avatar img{
+	width: 100%;
 }

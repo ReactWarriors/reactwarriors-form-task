@@ -5,7 +5,6 @@ import Field from "./Field";
 import Check from "./Check";
 import Radio from "./Radio";
 import Selector from "./Selector";
-
 export default class App extends React.Component {
 	constructor() {
 		super();
@@ -52,8 +51,8 @@ export default class App extends React.Component {
 				},
 			],
 		};
-	}
-
+	};
+	
 	onChange = event => {
 		this.setState({
 			[event.target.name]: event.target.value
@@ -89,6 +88,7 @@ export default class App extends React.Component {
 			});
 		};
 		reader.readAsDataURL(event.target.files[0]);
+		console.log(this.state.avatar)
 	};
 
 	onPrev = () => {
@@ -151,6 +151,9 @@ export default class App extends React.Component {
 			case 2:
 				if (!this.state.agreeConfidential) {
 					errors.agreeConfidential = "You should agree";
+				}
+				if (!this.state.avatar) {
+					errors.avatar = "Required";
 				}
 				break;
 			}
@@ -272,6 +275,9 @@ export default class App extends React.Component {
 						/>
 					</div>
 					<div className={`step ${this.state.activeStep === 2 ? 'active' : ''}`}>
+						<div className='avatar'>
+							{!(this.state.avatar) ? <img src='./images/default-avatar.59337bae.png' alt='' /> : <img src={this.state.avatar} alt='' />}
+						</div>
 						<div className="form-group">
 							<div className="custom-file">
 								<input
@@ -282,6 +288,7 @@ export default class App extends React.Component {
 									onChange={this.onChangeAvatar}
 								/>
 								<label className="custom-file-label" htmlFor="avatar">Choose file</label>
+								{this.state.errors.avatar ? <div className="invalid-feedback">{this.state.errors.avatar}</div> : null}
 							</div>
 						</div>
 						<Check
@@ -297,7 +304,10 @@ export default class App extends React.Component {
 						/>
 					</div>
 					<div className={`step ${this.state.activeStep === 3 ? 'active' : ''}`}>
-						<div>Avatar</div>
+						<div className='avatar'>
+							<img src={this.state.avatar} alt='' />
+						</div>
+						
 						<div>{this.state.username} {this.state.userSurname}</div>
 						<div>Email: {this.state.email}</div>
 						<div>Mobile: {this.state.phone}</div>
