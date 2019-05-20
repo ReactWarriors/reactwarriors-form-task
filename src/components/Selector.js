@@ -12,7 +12,7 @@ const Selector = props => {
 	} = props;
 	const getOptionsItems = () => {
 		return options.map((item, i) => (
-			<option key={item.id} value={item.id}>
+			<option key={i} value={item.id}>
 				{item.name}
 			</option>
 		));

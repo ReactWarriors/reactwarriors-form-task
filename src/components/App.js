@@ -51,6 +51,7 @@ export default class App extends React.Component {
 				},
 			],
 		};
+		console.log(Object.values(cities));
 	};
 	
 	onChange = event => {
@@ -62,7 +63,7 @@ export default class App extends React.Component {
 	onChangeCountry = event => {
 		this.setState({
 			[event.target.name]: event.target.value,
-			'cities': cities.filter(item => item.country === parseInt(event.target.value)),
+			'cities': Object.values(cities).filter(item => item.country === +event.target.value),
 			city: "0"
 		});
 	};
