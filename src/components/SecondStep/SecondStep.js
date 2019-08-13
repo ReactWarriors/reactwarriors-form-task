@@ -13,7 +13,8 @@ export default class SecondStep extends React.Component {
       city,
       errorCity,
       getOptionsItems,
-      selectedDefault
+      selectedDefault,
+      getCitiesOptions
     } = this.props;
     return (
       <div>
@@ -60,16 +61,18 @@ export default class SecondStep extends React.Component {
         </div>
 
         <div className="form-group">
-          <label htmlFor="country">City</label>
+          <label htmlFor="city">City</label>
           <select
             className={errorCity ? "form-control is-invalid" : "form-control"}
-            id="country"
-            name="country"
+            id="city"
+            name="city"
             value={city}
             onChange={onChange}
             error={errorCity}
           >
             <option value={selectedDefault}>Select city:</option>
+            <option >*Test*</option>
+            {getCitiesOptions()}
           </select>
           {errorCity ? (
             <div className="invalid-feedback">{errorCity}</div>
