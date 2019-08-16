@@ -11,7 +11,7 @@ import cities from "../data/cities.js";
 
 export default class App extends React.Component {
   state = {
-    currentStep: 2,
+    currentStep: 1,
     firstName: "",
     lastName: "",
     password: "",
