@@ -8,7 +8,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
+    position: relative;
+    width: 45px; 
+    position: relative; 
 }
 
 .step__number {
@@ -31,6 +33,18 @@
 .complete_number {
     background: #f26120;
     border: 4px solid #f26120;
+}
+
+.step_line {
+    position: absolute;
+    width: 50px;
+    height: 2px;
+    left: 3.2rem;
+    top: 1.2rem;
+    background: #b5b5b5;
+}
+.step_line_active {
+    background: #f26120;
 }
 
 .step_name {

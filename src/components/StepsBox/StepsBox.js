@@ -23,6 +23,11 @@ export default class App extends React.Component {
             1
           </div>
           <p className="step_name">Basic</p>
+          <span
+            className={
+              currentStep !== 1 ? "step_line step_line_active" : "step_line"
+            }
+          />
         </div>
         <div className="step">
           <div
@@ -37,6 +42,13 @@ export default class App extends React.Component {
             2
           </div>
           <p className="step_name">Contacts</p>
+          <span
+            className={
+              currentStep !== 2 && currentStep > 2
+                ? "step_line step_line_active"
+                : "step_line"
+            }
+          />
         </div>
         <div className="step">
           <div
@@ -51,6 +63,13 @@ export default class App extends React.Component {
             3
           </div>
           <p className="step_name">Avatar</p>
+          <span
+            className={
+              currentStep !== 3 && currentStep > 3
+                ? "step_line step_line_active"
+                : "step_line"
+            }
+          />
         </div>
         <div className="step">
           <div
