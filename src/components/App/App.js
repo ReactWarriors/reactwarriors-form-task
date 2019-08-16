@@ -11,7 +11,7 @@ import cities from "../data/cities.js";
 
 export default class App extends React.Component {
   state = {
-    currentStep: 1,
+    currentStep: 2,
     firstName: "",
     lastName: "",
     password: "",
@@ -37,19 +37,21 @@ export default class App extends React.Component {
       country: false,
       city: false,
       avatar: false
-    },
+    }
   };
 
   onChange = e => {
     this.setState({
       [e.target.name]: e.target.value
     });
+    //console.log ( e.target.value )
+    
   };
 
   getOptionsItems = () => {
     const countriesNames = countries;
     return countriesNames.map(item => (
-      <option key={item.id} value={item.id}>
+      <option key={item.id} value={item.id}  >
         {item.name}
       </option>
     ));
@@ -59,7 +61,7 @@ export default class App extends React.Component {
     const country = +this.state.country;
     return Object.entries(cities)
       .filter(n => n[1].country === country)
-      .map(([ id, city ]) => (
+      .map(([id, city]) => (
         <option key={id} value={id}>
           {city.name}
         </option>
@@ -146,9 +148,9 @@ export default class App extends React.Component {
       defaultAvatar:
         "https://reactwarriors.github.io/reactwarriors-stage-2/static/media/default-avatar.59337bae.png",
       avatar: "",
-      previuosButt: true,
-    })
-  }
+      previuosButt: true
+    });
+  };
 
   previousButtonTest = e => {
     e.preventDefault();
@@ -209,7 +211,7 @@ export default class App extends React.Component {
               avatar={this.state.avatar}
               firstName={this.state.firstName}
               lastName={this.state.lastName}
-              email={this.state.lastName}
+              email={this.state.email}
               phone={this.state.phone}
               country={this.state.country}
               city={this.state.city}
