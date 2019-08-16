@@ -71,7 +71,6 @@ export default class SecondStep extends React.Component {
             error={errorCity}
           >
             <option value={selectedDefault}>Select city:</option>
-            <option >*Test*</option>
             {getCitiesOptions()}
           </select>
           {errorCity ? (

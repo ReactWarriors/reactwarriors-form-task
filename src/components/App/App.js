@@ -56,11 +56,14 @@ export default class App extends React.Component {
   };
 
   getCitiesOptions = () => {
-    return Object.keys(cities).map(item => (
-      <option key={cities[item].country} value={cities[item].country}>
-        {cities[item].name}
-      </option>
-    ));
+    const country = +this.state.country;
+    return Object.entries(cities)
+      .filter(n => n[1].country === country)
+      .map(([ id, city ]) => (
+        <option key={id} value={id}>
+          {city.name}
+        </option>
+      ));
   };
 
   onChangeAvatar = event => {
