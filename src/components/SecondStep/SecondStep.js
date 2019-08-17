@@ -3,18 +3,12 @@ import Field from "../Field/Field";
 export default class SecondStep extends React.Component {
   render() {
     const {
-      email,
-      errorEmail,
-      phone,
-      errorPhone,
-      onChange,
-      country,
-      errorCountry,
-      city,
-      errorCity,
       getOptionsItems,
       selectedDefault,
-      getCitiesOptions
+      getCitiesOptions,
+      errors,
+      values,
+      onChange
     } = this.props;
     return (
       <div>
@@ -25,8 +19,8 @@ export default class SecondStep extends React.Component {
           type="email"
           placeholder="Enter your email"
           name="email"
-          value={email}
-          error={errorEmail}
+          value={values.email}
+          error={errors.errorEmail}
           onChange={onChange}
         />
         <Field
@@ -35,8 +29,8 @@ export default class SecondStep extends React.Component {
           type="phone"
           placeholder="Enter your phone number"
           name="phone"
-          value={phone}
-          error={errorPhone}
+          value={values.phone}
+          error={errors.errorPhone}
           onChange={onChange}
         />
 
@@ -44,37 +38,39 @@ export default class SecondStep extends React.Component {
           <label htmlFor="country">Country</label>
           <select
             className={
-              errorCountry ? "form-control is-invalid" : "form-control"
+              errors.errorCountry ? "form-control is-invalid" : "form-control"
             }
             id="country"
             name="country"
-            value={country}
+            value={values.country}
             onChange={onChange}
-            error={errorCountry}
+            error={errors.errorCountry}
           >
             <option value={selectedDefault}>Select country:</option>
             {getOptionsItems()}
           </select>
-          {errorCountry ? (
-            <div className="invalid-feedback">{errorCountry}</div>
+          {errors.errorCountry ? (
+            <div className="invalid-feedback">{errors.errorCountry}</div>
           ) : null}
         </div>
 
         <div className="form-group">
           <label htmlFor="city">City</label>
           <select
-            className={errorCity ? "form-control is-invalid" : "form-control"}
+            className={
+              errors.errorCity ? "form-control is-invalid" : "form-control"
+            }
             id="city"
             name="city"
-            value={city}
+            value={values.city}
             onChange={onChange}
-            error={errorCity}
+            error={errors.errorCity}
           >
             <option value={selectedDefault}>Select city:</option>
             {getCitiesOptions()}
           </select>
-          {errorCity ? (
-            <div className="invalid-feedback">{errorCity}</div>
+          {errors.errorCity ? (
+            <div className="invalid-feedback">{errors.errorCity}</div>
           ) : null}
         </div>
       </div>

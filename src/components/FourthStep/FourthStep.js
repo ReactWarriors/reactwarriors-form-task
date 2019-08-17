@@ -1,6 +1,7 @@
 import React from "react";
 
 export default class FourthStep extends React.Component {
+
   render() {
     const {
       avatar,

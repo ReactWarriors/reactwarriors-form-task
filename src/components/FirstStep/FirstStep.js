@@ -4,16 +4,9 @@ import Field from "../Field/Field";
 export default class FirstStep extends React.Component {
   render() {
     const {
-      firstName,
-      errorFirstName,
-      onChange,
-      lastName,
-      errorLastName,
-      password,
-      errorPassword,
-      repeatPassword,
-      errorRepeatPassword,
-      checkedGender,
+      values,
+      errors,
+      onChange
     } = this.props;
     return (
       <div className="firstStepWrapp">
@@ -23,8 +16,8 @@ export default class FirstStep extends React.Component {
           type="text"
           placeholder="Enter your name"
           name="firstName"
-          value={firstName}
-          error={errorFirstName}
+          value={values.firstName}
+          error={errors.errorFirstName}
           onChange={onChange}
         />
         <Field
@@ -33,8 +26,8 @@ export default class FirstStep extends React.Component {
           type="text"
           placeholder="Enter your last name"
           name="lastName"
-          value={lastName}
-          error={errorLastName}
+          value={values.lastName}
+          error={errors.errorLastName}
           onChange={onChange}
         />
         <Field
@@ -43,8 +36,8 @@ export default class FirstStep extends React.Component {
           type="password"
           placeholder="Enter password"
           name="password"
-          value={password}
-          error={errorPassword}
+          value={values.password}
+          error={errors.errorPassword}
           onChange={onChange}
         />
         <Field
@@ -53,8 +46,8 @@ export default class FirstStep extends React.Component {
           type="password"
           placeholder="Repeat password"
           name="repeatPassword"
-          value={repeatPassword}
-          error={errorRepeatPassword}
+          value={values.repeatPassword}
+          error={errors.errorRepeatPassword}
           onChange={onChange}
         />
         <fieldset className="form-group">
@@ -66,7 +59,7 @@ export default class FirstStep extends React.Component {
               id="male"
               name="gender"
               value="male"
-              checked={checkedGender === "male"}
+              checked={values.checkedGender === "male"}
               onChange={onChange}
             />
             <label className="form-check-label" htmlFor="male">
@@ -80,7 +73,7 @@ export default class FirstStep extends React.Component {
               id="female"
               name="gender"
               value="female"
-              checked={checkedGender === "female"}
+              checked={values.checkedGender === "female"}
               onChange={onChange}
             />
             <label className="form-check-label" htmlFor="female">
