@@ -33,7 +33,7 @@ export default class ThirdStep extends React.Component {
           <input
             type="file"
             className={
-              errors.errorAvatar
+              errors.avatar
                 ? "custom-file-input is-invalid"
                 : "custom-file-input"
             }
@@ -45,8 +45,8 @@ export default class ThirdStep extends React.Component {
             Choose avatar
           </label>
         </div>
-        {errors.errorAvatar ? (
-          <p className="invalid-feedback">{errors.errorAvatar}</p>
+        {errors.avatar ? (
+          <p className="invalid-feedback">{errors.avatar}</p>
         ) : null}
       </div>
     );

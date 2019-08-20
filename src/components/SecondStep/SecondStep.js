@@ -1,18 +1,44 @@
 import React from "react";
 import Field from "../Field/Field";
+import countries from "../data/countries.js";
+import cities from "../data/cities.js";
+
 export default class SecondStep extends React.Component {
+  getOptionsItems = () => {
+    const countriesNames = countries;
+    return countriesNames.map(item => (
+      <option key={item.id} value={item.id}>
+        {item.name}
+      </option>
+    ));
+  };
+
+  getCitiesOptions = () => {
+    let citiListItem = [];
+    for (let key in cities) {
+      // ключи
+      //console.log( key );  // "1", "2", "3" ...
+      // значения ключей
+      //console.log( cities[key].country ); // country, name...
+      if (cities[key].country === this.props.values.country) {
+        citiListItem.push({ id: cities[key].country, name: cities[key].name });
+      }
+      console.log(cities[key].country)
+      console.log(this.props.values.country)
+      return citiListItem.map(item => (
+        <option key={item.id} value={item.id}>
+          {item.name}
+          
+        </option>
+      ));
+    }
+  };
+
+
   render() {
-    const {
-      getOptionsItems,
-      selectedDefault,
-      getCitiesOptions,
-      errors,
-      values,
-      onChange
-    } = this.props;
+    const { errors, values, onChange } = this.props;
     return (
       <div>
-        <p>Second Step</p>
         <Field
           id="email"
           labelText="Email"
@@ -20,7 +46,7 @@ export default class SecondStep extends React.Component {
           placeholder="Enter your email"
           name="email"
           value={values.email}
-          error={errors.errorEmail}
+          error={errors.email}
           onChange={onChange}
         />
         <Field
@@ -30,7 +56,7 @@ export default class SecondStep extends React.Component {
           placeholder="Enter your phone number"
           name="phone"
           value={values.phone}
-          error={errors.errorPhone}
+          error={errors.phone}
           onChange={onChange}
         />
 
@@ -38,39 +64,35 @@ export default class SecondStep extends React.Component {
           <label htmlFor="country">Country</label>
           <select
             className={
-              errors.errorCountry ? "form-control is-invalid" : "form-control"
+              errors.country ? "form-control is-invalid" : "form-control"
             }
             id="country"
             name="country"
             value={values.country}
             onChange={onChange}
-            error={errors.errorCountry}
+            error={errors.country}
           >
-            <option value={selectedDefault}>Select country:</option>
-            {getOptionsItems()}
+            {this.getOptionsItems()}
           </select>
-          {errors.errorCountry ? (
-            <div className="invalid-feedback">{errors.errorCountry}</div>
+          {errors.country ? (
+            <div className="invalid-feedback">{errors.country}</div>
           ) : null}
         </div>
 
         <div className="form-group">
           <label htmlFor="city">City</label>
           <select
-            className={
-              errors.errorCity ? "form-control is-invalid" : "form-control"
-            }
+            className={errors.city ? "form-control is-invalid" : "form-control"}
             id="city"
             name="city"
             value={values.city}
             onChange={onChange}
-            error={errors.errorCity}
+            error={errors.city}
           >
-            <option value={selectedDefault}>Select city:</option>
-            {getCitiesOptions()}
+            {this.getCitiesOptions()}
           </select>
-          {errors.errorCity ? (
-            <div className="invalid-feedback">{errors.errorCity}</div>
+          {errors.city ? (
+            <div className="invalid-feedback">{errors.city}</div>
           ) : null}
         </div>
       </div>

@@ -1,44 +1,52 @@
 import React from "react";
-
+import countries from "../data/countries.js";
+import cities from "../data/cities"
 export default class FourthStep extends React.Component {
-
   render() {
-    const {
-      avatar,
-      firstName,
-      lastName,
-      email,
-      phone,
-      country,
-      city,
-      onResetClick
-    } = this.props;
+    const { values, onResetClick } = this.props;
+    const findCountry = countries.find(item => {
+      if (item.id == values.country) {
+        return item.name
+      }
+    });
     return (
       <div className="container-fluid">
         <div className="row mb-4">
           <div className="col-4">
-            <img src={avatar} alt="UserAvatar" style={{ width: "100%" }} />
+            <img
+              src={values.avatar}
+              alt="UserAvatar"
+              style={{ width: "100%" }}
+            />
           </div>
           <div className="col-8 d-flex align-items-center">
-            <h4>{firstName + lastName}</h4>
+            <h4>{values.firstName + values.lastName}</h4>
           </div>
         </div>
         <div className="row mb-4">
           <div className="col-12">
             <p>
               <strong>Email: </strong>
-              {email}
+              {values.email}
             </p>
             <p>
-              <strong>Phone number: </strong> {phone}
+              <strong>Phone number: </strong> {values.phone}
             </p>
             <p>
-              <strong>Country:</strong> {country}, {city}
+              <strong>Country:</strong>
+              {Object.keys(findCountry).map(() => {
+                  return findCountry.name;
+                })},
+              {cities[values.city].name}
             </p>
           </div>
         </div>
-        <div class="d-flex justify-content-center">
-          <button type="button" class="btn btn-primary" onClick={onResetClick}>
+        <div className="d-flex justify-content-center">
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={onResetClick}
+          >
             Reset
           </button>
         </div>

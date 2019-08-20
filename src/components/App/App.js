@@ -6,8 +6,6 @@ import ThirdStep from "../ThirdStep/ThirdStep";
 import FourthStep from "../FourthStep/FourthStep";
 import StepsBox from "../StepsBox/StepsBox";
 
-import countries from "../data/countries.js";
-import cities from "../data/cities.js";
 import FormControl from "../FormControl/FormControl";
 
 export default class App extends React.Component {
@@ -25,7 +23,6 @@ export default class App extends React.Component {
       city: "",
       avatar: ""
     },
-    selectedDefault: "",
     errors: {
       firstName: false,
       lastName: false,
@@ -41,34 +38,61 @@ export default class App extends React.Component {
   };
 
   onChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
-
-  getOptionsItems = () => {
-    const countriesNames = countries;
-    return countriesNames.map(item => (
-      <option key={item.id} value={item.id}>
-        {item.name}
-      </option>
-    ));
-  };
-
-  getCitiesOptions = () => {
-    const country = +this.state.country;
-    return Object.entries(cities)
-      .filter(n => n[1].country === country)
-      .map(([id, city]) => (
-        <option key={id} value={id}>
-          {city.name}
-        </option>
-      ));
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState(state => ({
+      values: {
+        ...state.values,
+        [name]: value
+      }
+    }));
   };
 
   onSubmit = e => {
     e.preventDefault();
     const errors = {};
+    {/*
+     switch (this.state.currentStep === 1) {
+      case this.state.values.firstName.length < 5:
+        errors.firstName = "Must be 5 characters or more";
+      // eslint-disable-next-line
+      case this.state.values.lastName < 5:
+        errors.lastName = "Must be 5 characters or more";
+      // eslint-disable-next-line
+      case this.state.values.password < 6:
+        errors.password = "Must be 6 characters or more";
+      // eslint-disable-next-line
+      case this.state.values.password !== this.state.values.repeatPassword ||
+        this.state.values.password === "":
+        errors.repeatPassword = "Must be equal password";
+        break;
+      default:
+    }
+    switch (this.state.currentStep === 2) {
+      case !this.state.values.email.includes("@") ||
+        this.state.values.email.length < 8:
+        errors.email = "Required";
+      // eslint-disable-next-line
+      case !this.state.values.phone.includes("+") ||
+        this.state.values.email.length < 9:
+        errors.phone = "Required";
+      // eslint-disable-next-line
+      case this.state.values.country === "":
+        errors.country = "No selected country";
+      // eslint-disable-next-line
+      case this.state.values.city === "":
+        errors.city = "No selected city";
+        break;
+      default:
+    }
+    switch (this.state.currentStep === 3) {
+      case this.state.values.avatar === "":
+        errors.avatar = "Choose your avatar please";
+        break;
+      default:
+    }
+    */}
+
     if (this.state.currentStep === 1) {
       if (this.state.values.firstName.length < 5) {
         errors.firstName = "Must be 5 characters or more";
@@ -80,7 +104,7 @@ export default class App extends React.Component {
         errors.password = "Must be 6 characters or more";
       }
       if (
-        this.state.values.password !== this.state.repeatPassword ||
+        this.state.values.password !== this.state.values.repeatPassword ||
         this.state.values.password === ""
       ) {
         errors.repeatPassword = "Must be equal password";
@@ -111,6 +135,7 @@ export default class App extends React.Component {
         errors.avatar = "Choose your avatar please";
       }
     }
+
     if (Object.keys(errors).length > 0) {
       // error
       this.setState({
@@ -121,7 +146,6 @@ export default class App extends React.Component {
         errors: {},
         currentStep: this.state.currentStep + 1
       });
-      console.log("submit", this.state);
     }
   };
 
@@ -164,9 +188,7 @@ export default class App extends React.Component {
           ) : null}
           {this.state.currentStep === 2 ? (
             <SecondStep
-              getOptionsItems={this.getOptionsItems}
               getCityOptions={this.getCityOptions}
-              selectedDefault={this.state.selectedDefault}
               getCitiesOptions={this.getCitiesOptions}
               errors={this.state.errors}
               onChange={this.onChange}

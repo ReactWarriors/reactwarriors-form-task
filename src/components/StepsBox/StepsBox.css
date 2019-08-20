@@ -13,7 +13,7 @@
     position: relative; 
 }
 
-.step__number {
+.number {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,12 +25,12 @@
     font-weight: 700;
 }
 
-.active_number {
+.active {
     background: #19ddfe;
     border: 4px solid #f26120;
 }
 
-.complete_number {
+.complete {
     background: #f26120;
     border: 4px solid #f26120;
 }

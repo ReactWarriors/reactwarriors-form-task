@@ -17,7 +17,7 @@ export default class FirstStep extends React.Component {
           placeholder="Enter your name"
           name="firstName"
           value={values.firstName}
-          error={errors.errorFirstName}
+          error={errors.firstName}
           onChange={onChange}
         />
         <Field
@@ -27,7 +27,7 @@ export default class FirstStep extends React.Component {
           placeholder="Enter your last name"
           name="lastName"
           value={values.lastName}
-          error={errors.errorLastName}
+          error={errors.lastName}
           onChange={onChange}
         />
         <Field
@@ -37,7 +37,7 @@ export default class FirstStep extends React.Component {
           placeholder="Enter password"
           name="password"
           value={values.password}
-          error={errors.errorPassword}
+          error={errors.password}
           onChange={onChange}
         />
         <Field
@@ -47,7 +47,7 @@ export default class FirstStep extends React.Component {
           placeholder="Repeat password"
           name="repeatPassword"
           value={values.repeatPassword}
-          error={errors.errorRepeatPassword}
+          error={errors.repeatPassword}
           onChange={onChange}
         />
         <fieldset className="form-group">
@@ -59,7 +59,7 @@ export default class FirstStep extends React.Component {
               id="male"
               name="gender"
               value="male"
-              checked={values.checkedGender === "male"}
+              checked={values.gender === "male"}
               onChange={onChange}
             />
             <label className="form-check-label" htmlFor="male">
@@ -73,7 +73,7 @@ export default class FirstStep extends React.Component {
               id="female"
               name="gender"
               value="female"
-              checked={values.checkedGender === "female"}
+              checked={values.gender === "female"}
               onChange={onChange}
             />
             <label className="form-check-label" htmlFor="female">
