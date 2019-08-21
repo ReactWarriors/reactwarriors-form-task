@@ -1,27 +1,27 @@
-import React from "react";
+import React from 'react'
 
-import FirstStep from "../FirstStep/FirstStep";
-import SecondStep from "../SecondStep/SecondStep";
-import ThirdStep from "../ThirdStep/ThirdStep";
-import FourthStep from "../FourthStep/FourthStep";
-import StepsBox from "../StepsBox/StepsBox";
+import FirstStep from '../FirstStep/FirstStep'
+import SecondStep from '../SecondStep/SecondStep'
+import ThirdStep from '../ThirdStep/ThirdStep'
+import FourthStep from '../FourthStep/FourthStep'
+import StepsBox from '../StepsBox/StepsBox'
 
-import FormControl from "../FormControl/FormControl";
+import FormControl from '../FormControl/FormControl'
 
 export default class App extends React.Component {
   state = {
     currentStep: 1,
     values: {
-      firstName: "",
-      lastName: "",
-      password: "",
-      repeatPassword: "",
-      gender: "male",
-      email: "",
-      phone: "",
-      country: "",
-      city: "",
-      avatar: ""
+      firstName: '',
+      lastName: '',
+      password: '',
+      repeatPassword: '',
+      gender: 'male',
+      email: '',
+      phone: '',
+      country: '',
+      city: '',
+      avatar: '',
     },
     errors: {
       firstName: false,
@@ -33,87 +33,88 @@ export default class App extends React.Component {
       phone: false,
       country: false,
       city: false,
-      avatar: false
-    }
-  };
+      avatar: false,
+    },
+  }
 
   onChange = e => {
-    const name = e.target.name;
-    const value = e.target.value;
+    const name = e.target.name
+    const value = e.target.value
     this.setState(state => ({
       values: {
         ...state.values,
-        [name]: value
-      }
-    }));
-  };
+        [name]: value,
+      },
+    }))
+  }
 
   onSubmit = e => {
-    e.preventDefault();
-    const errors = {};
+    e.preventDefault()
+    const errors = {}
     switch (this.state.currentStep) {
       case 1:
         if (this.state.values.firstName.length < 5)
-          errors.firstName = "Must be 5 characters or more";
+          errors.firstName = 'Must be 5 characters or more'
         if (this.state.values.lastName < 5)
-          errors.lastName = "Must be 5 characters or more";
+          errors.lastName = 'Must be 5 characters or more'
         if (this.state.values.password < 6)
-          errors.password = "Must be 6 characters or more";
+          errors.password = 'Must be 6 characters or more'
         if (
           this.state.values.password !== this.state.values.repeatPassword ||
-          this.state.values.password === ""
+          this.state.values.password === ''
         )
-          errors.repeatPassword = "Must be equal password";
-        break;
+          errors.repeatPassword = 'Must be equal password'
+        break
       case 2:
         if (
-          !this.state.values.email.includes("@") ||
+          !this.state.values.email.includes('@') ||
           this.state.values.email.length < 8
         )
-          errors.email = "Required";
+          errors.email = 'Required'
         if (
-          !this.state.values.phone.includes("+") ||
+          !this.state.values.phone.includes('+') ||
           this.state.values.email.length < 9
         )
-          errors.phone = "Required";
-        if (this.state.values.country === "")
-          errors.country = "No selected country";
-        if (this.state.values.city === "") errors.city = "No selected city";
-        break;
+          errors.phone = 'Required'
+        if (this.state.values.country === '')
+          errors.country = 'No selected country'
+        if (this.state.values.city === '') errors.city = 'No selected city'
+        break
       case 3:
-        if (this.state.values.avatar === "")
-          errors.avatar = "Choose your avatar please";
-        break;
+        if (this.state.values.avatar === '')
+          errors.avatar = 'Choose your avatar please'
+        break
       default:
     }
     Object.keys(errors).length > 0
       ? this.setState({ errors: errors })
-      : this.setState({ errors: {}, currentStep: this.state.currentStep + 1 });
-  };
+      : this.setState({ errors: {}, currentStep: this.state.currentStep + 1 })
+  }
 
   onResetClick = () => {
     this.setState({
       currentStep: 1,
-      firstName: "",
-      lastName: "",
-      password: "",
-      repeatPassword: "",
-      gender: "male",
-      email: "",
-      phone: "",
-      country: "",
-      city: "",
-      avatar: "",
-      previuosButt: true
-    });
-  };
+      values: {
+        firstName: '',
+        lastName: '',
+        password: '',
+        repeatPassword: '',
+        gender: 'male',
+        email: '',
+        phone: '',
+        country: '',
+        city: '',
+        avatar: '',
+      },
+    })
+  }
 
   onPreviousStep = e => {
-    e.preventDefault();
+    e.preventDefault()
     this.setState({
-      currentStep: this.state.currentStep - 1
-    });
-  };
+      currentStep: this.state.currentStep - 1,
+    })
+  }
 
   render() {
     return (
@@ -159,6 +160,6 @@ export default class App extends React.Component {
           ) : null}
         </form>
       </div>
-    );
+    )
   }
 }

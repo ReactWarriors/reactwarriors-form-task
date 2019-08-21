@@ -1,13 +1,13 @@
-import React from "react";
-import countries from "../data/countries.js";
-import cities from "../data/cities";
+import React from 'react'
+import countries from '../data/countries.js'
+import cities from '../data/cities'
 export default class FourthStep extends React.Component {
   render() {
-    const { values, onResetClick } = this.props;
+    const { values, onResetClick } = this.props
 
     const findCountry = countries.find(item => {
-      return Number(item.id) === Number(values.country);
-    });
+      return Number(item.id) === Number(values.country)
+    })
 
     return (
       <div className="container-fluid">
@@ -16,7 +16,7 @@ export default class FourthStep extends React.Component {
             <img
               src={values.avatar}
               alt="UserAvatar"
-              style={{ width: "100%" }}
+              style={{ width: '100%' }}
             />
           </div>
           <div className="col-8 d-flex align-items-center">
@@ -42,8 +42,8 @@ export default class FourthStep extends React.Component {
               <strong>Phone number: </strong> {values.phone}
             </p>
             <p>
-              <strong>Country:</strong> {findCountry.name},{" "}
-              {cities[values.city].name}
+              <strong>Country:</strong>
+              {findCountry.name},{cities[values.city].name}
             </p>
           </div>
         </div>
@@ -57,6 +57,6 @@ export default class FourthStep extends React.Component {
           </button>
         </div>
       </div>
-    );
+    )
   }
 }
