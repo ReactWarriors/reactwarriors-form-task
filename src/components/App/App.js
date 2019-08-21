@@ -51,102 +51,44 @@ export default class App extends React.Component {
   onSubmit = e => {
     e.preventDefault();
     const errors = {};
-    {/*
-     switch (this.state.currentStep === 1) {
-      case this.state.values.firstName.length < 5:
-        errors.firstName = "Must be 5 characters or more";
-      // eslint-disable-next-line
-      case this.state.values.lastName < 5:
-        errors.lastName = "Must be 5 characters or more";
-      // eslint-disable-next-line
-      case this.state.values.password < 6:
-        errors.password = "Must be 6 characters or more";
-      // eslint-disable-next-line
-      case this.state.values.password !== this.state.values.repeatPassword ||
-        this.state.values.password === "":
-        errors.repeatPassword = "Must be equal password";
+    switch (this.state.currentStep) {
+      case 1:
+        if (this.state.values.firstName.length < 5)
+          errors.firstName = "Must be 5 characters or more";
+        if (this.state.values.lastName < 5)
+          errors.lastName = "Must be 5 characters or more";
+        if (this.state.values.password < 6)
+          errors.password = "Must be 6 characters or more";
+        if (
+          this.state.values.password !== this.state.values.repeatPassword ||
+          this.state.values.password === ""
+        )
+          errors.repeatPassword = "Must be equal password";
+        break;
+      case 2:
+        if (
+          !this.state.values.email.includes("@") ||
+          this.state.values.email.length < 8
+        )
+          errors.email = "Required";
+        if (
+          !this.state.values.phone.includes("+") ||
+          this.state.values.email.length < 9
+        )
+          errors.phone = "Required";
+        if (this.state.values.country === "")
+          errors.country = "No selected country";
+        if (this.state.values.city === "") errors.city = "No selected city";
+        break;
+      case 3:
+        if (this.state.values.avatar === "")
+          errors.avatar = "Choose your avatar please";
         break;
       default:
     }
-    switch (this.state.currentStep === 2) {
-      case !this.state.values.email.includes("@") ||
-        this.state.values.email.length < 8:
-        errors.email = "Required";
-      // eslint-disable-next-line
-      case !this.state.values.phone.includes("+") ||
-        this.state.values.email.length < 9:
-        errors.phone = "Required";
-      // eslint-disable-next-line
-      case this.state.values.country === "":
-        errors.country = "No selected country";
-      // eslint-disable-next-line
-      case this.state.values.city === "":
-        errors.city = "No selected city";
-        break;
-      default:
-    }
-    switch (this.state.currentStep === 3) {
-      case this.state.values.avatar === "":
-        errors.avatar = "Choose your avatar please";
-        break;
-      default:
-    }
-    */}
-
-    if (this.state.currentStep === 1) {
-      if (this.state.values.firstName.length < 5) {
-        errors.firstName = "Must be 5 characters or more";
-      }
-      if (this.state.values.lastName < 5) {
-        errors.lastName = "Must be 5 characters or more";
-      }
-      if (this.state.values.password < 6) {
-        errors.password = "Must be 6 characters or more";
-      }
-      if (
-        this.state.values.password !== this.state.values.repeatPassword ||
-        this.state.values.password === ""
-      ) {
-        errors.repeatPassword = "Must be equal password";
-      }
-    }
-    if (this.state.currentStep === 2) {
-      if (
-        !this.state.values.email.includes("@") ||
-        this.state.values.email.length < 8
-      ) {
-        errors.email = "Required";
-      }
-      if (
-        !this.state.values.phone.includes("+") ||
-        this.state.values.email.length < 9
-      ) {
-        errors.phone = "Required";
-      }
-      if (this.state.values.country === "") {
-        errors.country = "No selected country";
-      }
-      if (this.state.values.city === "") {
-        errors.city = "No selected city";
-      }
-    }
-    if (this.state.currentStep === 3) {
-      if (this.state.values.avatar === "") {
-        errors.avatar = "Choose your avatar please";
-      }
-    }
-
-    if (Object.keys(errors).length > 0) {
-      // error
-      this.setState({
-        errors: errors
-      });
-    } else {
-      this.setState({
-        errors: {},
-        currentStep: this.state.currentStep + 1
-      });
-    }
+    Object.keys(errors).length > 0
+      ? this.setState({ errors: errors })
+      : this.setState({ errors: {}, currentStep: this.state.currentStep + 1 });
   };
 
   onResetClick = () => {
@@ -161,7 +103,6 @@ export default class App extends React.Component {
       phone: "",
       country: "",
       city: "",
-      selectedDefault: "",
       avatar: "",
       previuosButt: true
     });
@@ -188,8 +129,6 @@ export default class App extends React.Component {
           ) : null}
           {this.state.currentStep === 2 ? (
             <SecondStep
-              getCityOptions={this.getCityOptions}
-              getCitiesOptions={this.getCitiesOptions}
               errors={this.state.errors}
               onChange={this.onChange}
               values={this.state.values}

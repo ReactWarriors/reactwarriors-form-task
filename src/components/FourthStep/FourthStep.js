@@ -1,14 +1,14 @@
 import React from "react";
 import countries from "../data/countries.js";
-import cities from "../data/cities"
+import cities from "../data/cities";
 export default class FourthStep extends React.Component {
   render() {
     const { values, onResetClick } = this.props;
+
     const findCountry = countries.find(item => {
-      if (item.id == values.country) {
-        return item.name
-      }
+      return Number(item.id) === Number(values.country);
     });
+
     return (
       <div className="container-fluid">
         <div className="row mb-4">
@@ -20,7 +20,16 @@ export default class FourthStep extends React.Component {
             />
           </div>
           <div className="col-8 d-flex align-items-center">
-            <h4>{values.firstName + values.lastName}</h4>
+            <h4>
+              <p>
+                First name:
+                <span className="font-weight-light">{values.firstName}</span>
+              </p>
+              <p>
+                Last name:
+                <span className="font-weight-light">{values.lastName}</span>
+              </p>
+            </h4>
           </div>
         </div>
         <div className="row mb-4">
@@ -33,10 +42,7 @@ export default class FourthStep extends React.Component {
               <strong>Phone number: </strong> {values.phone}
             </p>
             <p>
-              <strong>Country:</strong>
-              {Object.keys(findCountry).map(() => {
-                  return findCountry.name;
-                })},
+              <strong>Country:</strong> {findCountry.name},{" "}
               {cities[values.city].name}
             </p>
           </div>

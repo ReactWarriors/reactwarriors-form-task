@@ -4,7 +4,7 @@ import countries from "../data/countries.js";
 import cities from "../data/cities.js";
 
 export default class SecondStep extends React.Component {
-  getOptionsItems = () => {
+  getCountryItems = () => {
     const countriesNames = countries;
     return countriesNames.map(item => (
       <option key={item.id} value={item.id}>
@@ -13,25 +13,18 @@ export default class SecondStep extends React.Component {
     ));
   };
 
-  getCitiesOptions = () => {
-    let citiListItem = [];
-    for (let key in cities) {
-      // ключи
-      //console.log( key );  // "1", "2", "3" ...
-      // значения ключей
-      //console.log( cities[key].country ); // country, name...
-      if (cities[key].country === this.props.values.country) {
-        citiListItem.push({ id: cities[key].country, name: cities[key].name });
-      }
-      console.log(cities[key].country)
-      console.log(this.props.values.country)
-      return citiListItem.map(item => (
-        <option key={item.id} value={item.id}>
-          {item.name}
-          
-        </option>
-      ));
+  getCitiesOptions = (items) => {
+    let citiesList = [];
+    for ( let key in items ){
+        if( items[key].country === Number( this.props.values.country )){
+            citiesList.push( { id : key, name : items[key].name } );
+        }
     }
+    return citiesList.map(item => (
+        <option key={item.id} value={item.id}>
+            {item.name}
+        </option>
+    ));
   };
 
 
@@ -72,7 +65,8 @@ export default class SecondStep extends React.Component {
             onChange={onChange}
             error={errors.country}
           >
-            {this.getOptionsItems()}
+            <option value="">Select country:</option>
+            {this.getCountryItems()}
           </select>
           {errors.country ? (
             <div className="invalid-feedback">{errors.country}</div>
@@ -89,7 +83,8 @@ export default class SecondStep extends React.Component {
             onChange={onChange}
             error={errors.city}
           >
-            {this.getCitiesOptions()}
+            <option value="">Select city:</option>
+            {this.getCitiesOptions(cities)}
           </select>
           {errors.city ? (
             <div className="invalid-feedback">{errors.city}</div>

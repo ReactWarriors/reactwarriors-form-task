@@ -9,18 +9,16 @@ export default class App extends React.Component {
       <div className="steps d-flex mb-2 justify-content-between">
         {["Basic", "contacts", "Avatar", "Finish"].map((stepName, index) => {
           return (
-            <div className="step">
-              <div
-                className={`number mb-2  ${
-                  index + 1 === currentStep
-                    ? "active"
-                    : index + 1 <= currentStep
-                    ? "complete"
-                    : ""
-                } `}
-              >
-                {index + 1}
-              </div>
+            <div
+              className={`number mb-5  ${
+                index + 1 === currentStep
+                  ? "active"
+                  : index + 1 < currentStep
+                  ? "complete"
+                  : ""
+              } `}
+            >
+              <div>{index + 1}</div>
               <p className="step_name"> {stepName} </p>
             </div>
           );
