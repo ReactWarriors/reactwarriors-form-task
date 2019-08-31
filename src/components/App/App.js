@@ -9,7 +9,7 @@ import StepsBox from '../StepsBox/StepsBox'
 import FormControl from '../FormControl/FormControl'
 
 export default class App extends React.Component {
-  state = {
+  initalState = {
     currentStep: 1,
     values: {
       firstName: '',
@@ -23,19 +23,9 @@ export default class App extends React.Component {
       city: '',
       avatar: '',
     },
-    errors: {
-      firstName: false,
-      lastName: false,
-      password: false,
-      repeatPassword: false,
-      gender: false,
-      email: false,
-      phone: false,
-      country: false,
-      city: false,
-      avatar: false,
-    },
+    errors: {},
   }
+  state = this.initalState
 
   onChange = e => {
     const name = e.target.name
@@ -48,10 +38,9 @@ export default class App extends React.Component {
     }))
   }
 
-  onSubmit = e => {
-    e.preventDefault()
+  getErrors = () => {
     const errors = {}
-    const values = this.state.values
+    const { values } = this.state
     switch (this.state.currentStep) {
       case 1:
         if (values.firstName.length < 5)
@@ -76,34 +65,32 @@ export default class App extends React.Component {
         break
       default:
     }
-    Object.keys(errors).length > 0
-      ? this.setState({ errors: errors })
-      : this.setState({ errors: {}, currentStep: this.state.currentStep + 1 })
+    return errors
+  }
+
+  onSubmit = e => {
+    e.preventDefault()
+
+    const errors = this.getErrors()
+    if (Object.keys(errors).length > 0) {
+      this.setState({ errors })
+    } else {
+      this.setState(state => ({
+        errors: {},
+        currentStep: state.currentStep + 1,
+      }))
+    }
   }
 
   onResetClick = () => {
-    this.setState({
-      currentStep: 1,
-      values: {
-        firstName: '',
-        lastName: '',
-        password: '',
-        repeatPassword: '',
-        gender: 'male',
-        email: '',
-        phone: '',
-        country: '',
-        city: '',
-        avatar: '',
-      },
-    })
+    this.setState(this.initalState)
   }
 
   onPreviousStep = e => {
     e.preventDefault()
-    this.setState({
-      currentStep: this.state.currentStep - 1,
-    })
+    this.setState(state => ({
+      currentStep: state.currentStep - 1,
+    }))
   }
 
   render() {

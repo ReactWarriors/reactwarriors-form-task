@@ -5,9 +5,8 @@ export default class FourthStep extends React.Component {
   render() {
     const { values, onResetClick } = this.props
 
-    const findCountry = countries.find(item => {
-      return Number(item.id) === Number(values.country)
-    })
+    const country =
+      countries.find(item => Number(item.id) === Number(values.country)) || {}
 
     return (
       <div className="container-fluid">
@@ -43,7 +42,7 @@ export default class FourthStep extends React.Component {
             </p>
             <p>
               <strong>Country:</strong>
-              {findCountry.name},{cities[values.city].name}
+              {country.name},{cities[values.city].name}
             </p>
           </div>
         </div>

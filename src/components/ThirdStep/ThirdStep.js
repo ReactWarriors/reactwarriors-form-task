@@ -1,26 +1,28 @@
-import React from "react";
+import React from 'react'
+import classNames from 'classnames'
 
 const imgStyle = {
-  objectFit: "scale-down"
-};
+  objectFit: 'scale-down',
+}
+const defaultAvatar =
+  'https://reactwarriors.github.io/reactwarriors-stage-2/static/media/default-avatar.59337bae.png'
 
 export default class ThirdStep extends React.Component {
   onChangeAvatar = event => {
-    const reader = new FileReader();
+    const reader = new FileReader()
     reader.onload = event => {
       this.props.onChange({
         target: {
-          name: "avatar",
-          value: event.target.result
-        }
-      });
-    };
-    reader.readAsDataURL(event.target.files[0]);
-  };
+          name: 'avatar',
+          value: event.target.result,
+        },
+      })
+    }
+    reader.readAsDataURL(event.target.files[0])
+  }
 
   render() {
-    const {  values, errors } = this.props;
-    const defaultAvatar = "https://reactwarriors.github.io/reactwarriors-stage-2/static/media/default-avatar.59337bae.png"
+    const { values, errors } = this.props
     return (
       <div className="d-flex flex-column justify-content-center ">
         <img
@@ -32,11 +34,9 @@ export default class ThirdStep extends React.Component {
         <div className="custom-file mb-4">
           <input
             type="file"
-            className={
-              errors.avatar
-                ? "custom-file-input is-invalid"
-                : "custom-file-input"
-            }
+            className={classNames('custom-file-input', {
+              'is-invalid': errors.avatar,
+            })}
             id="avatar"
             name="avatar"
             onChange={this.onChangeAvatar}
@@ -49,6 +49,6 @@ export default class ThirdStep extends React.Component {
           <p className="invalid-feedback">{errors.avatar}</p>
         ) : null}
       </div>
-    );
+    )
   }
 }

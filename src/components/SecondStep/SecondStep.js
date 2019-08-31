@@ -1,35 +1,25 @@
-import React from "react";
-import Field from "../Field/Field";
-import countries from "../data/countries.js";
-import cities from "../data/cities.js";
+import React from 'react'
+import Field from '../Field/Field'
+import countries from '../data/countries.js'
+import cities from '../data/cities.js'
 
 export default class SecondStep extends React.Component {
-  getCountryItems = () => {
-    const countriesNames = countries;
-    return countriesNames.map(item => (
+  getCitiesOptions = items => {
+    let citiesList = []
+    for (let key in items) {
+      if (items[key].country === Number(this.props.values.country)) {
+        citiesList.push({ id: key, name: items[key].name })
+      }
+    }
+    return citiesList.map(item => (
       <option key={item.id} value={item.id}>
         {item.name}
       </option>
-    ));
-  };
-
-  getCitiesOptions = (items) => {
-    let citiesList = [];
-    for ( let key in items ){
-        if( items[key].country === Number( this.props.values.country )){
-            citiesList.push( { id : key, name : items[key].name } );
-        }
-    }
-    return citiesList.map(item => (
-        <option key={item.id} value={item.id}>
-            {item.name}
-        </option>
-    ));
-  };
-
+    ))
+  }
 
   render() {
-    const { errors, values, onChange } = this.props;
+    const { errors, values, onChange } = this.props
     return (
       <div>
         <Field
@@ -57,7 +47,7 @@ export default class SecondStep extends React.Component {
           <label htmlFor="country">Country</label>
           <select
             className={
-              errors.country ? "form-control is-invalid" : "form-control"
+              errors.country ? 'form-control is-invalid' : 'form-control'
             }
             id="country"
             name="country"
@@ -66,7 +56,11 @@ export default class SecondStep extends React.Component {
             error={errors.country}
           >
             <option value="">Select country:</option>
-            {this.getCountryItems()}
+            {countries.map(item => (
+              <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+            ))}
           </select>
           {errors.country ? (
             <div className="invalid-feedback">{errors.country}</div>
@@ -76,7 +70,7 @@ export default class SecondStep extends React.Component {
         <div className="form-group">
           <label htmlFor="city">City</label>
           <select
-            className={errors.city ? "form-control is-invalid" : "form-control"}
+            className={errors.city ? 'form-control is-invalid' : 'form-control'}
             id="city"
             name="city"
             value={values.city}
@@ -91,6 +85,6 @@ export default class SecondStep extends React.Component {
           ) : null}
         </div>
       </div>
-    );
+    )
   }
 }
