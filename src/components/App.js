@@ -14,6 +14,12 @@ class App extends React.Component {
     console.log("click");
   };
 
+  nextPage = event => {
+    this.setState({
+      page: this.state.page + 1
+    });
+  };
+
   render() {
     return (
       <div className="container">
@@ -27,7 +33,7 @@ class App extends React.Component {
           <Field />
           <div className="button_container">
             <button onClick={this.onClick}>Previous</button>
-            <button onClick={this.onClick}>Next</button>
+            <button onClick={this.nextPage}>Next</button>
           </div>
           <div className="page">{`page:  ${this.state.page}`}</div>
         </form>

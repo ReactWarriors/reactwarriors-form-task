@@ -9,11 +9,14 @@ body {
 .tabs_container {
   display: flex;
   justify-content: center;
-  margin-right: 30px;
 }
 
 .form {
   width: 60%;
   background: cornsilk;
   margin: auto;
+}
+
+.tabs_container_item {
+  margin-right: 30px;
 }
