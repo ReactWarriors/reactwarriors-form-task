@@ -43,20 +43,18 @@ class App extends React.Component {
     return (
       <div className="container">
         <form className="form">
-          <TabsContainer />
-          { if(this.state.page === 1){
+          <TabsContainer page={this.state.page} />
+          {this.state.page === 1 ? (
             <Page1 />
-          }
-          if(this.state.page === 2){
+          ) : this.state.page === 2 ? (
             <Page2 />
-          }
-          if(this.state.page === 3){
+          ) : this.state.page === 3 ? (
             <Page3 />
-          }
-          if(this.state.page === 4){
+          ) : this.state.page === 4 ? (
             <Page4 />
-          }
-          }
+          ) : (
+            ""
+          )}
           <Field />
           {this.state.page < 4 ? (
             <div className="button_container">

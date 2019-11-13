@@ -1,13 +1,21 @@
 import React from "react";
 
 class TabsContainer extends React.Component {
+  constructor(props) {
+    const { page } = props;
+    super();
+    this.state = {
+      page: this.page,
+      className: "tabs_container_item"
+    };
+  }
   render() {
     return (
       <div className="tabs_container">
-        <div className="tabs_container_item">1</div>
-        <div className="tabs_container_item">2</div>
-        <div className="tabs_container_item">3</div>
-        <div className="tabs_container_item">4</div>
+        <div className={this.state.className}>{this.state.page}</div>
+        <div className={this.state.className}>{this.state.page}</div>
+        <div className={this.state.className}>{this.state.page}</div>
+        <div className={this.state.className}>{this.state.page}</div>
       </div>
     );
   }
