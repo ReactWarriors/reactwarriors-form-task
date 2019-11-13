@@ -39,6 +39,14 @@ class App extends React.Component {
     });
   };
 
+  getOptionsItems = items => {
+    return items.map(item => (
+      <option key={item.id} value={item.id}>
+        {item.name}
+      </option>
+    ));
+  };
+
   render() {
     return (
       <div className="container">
@@ -47,7 +55,7 @@ class App extends React.Component {
           {this.state.page === 1 ? (
             <Page1 />
           ) : this.state.page === 2 ? (
-            <Page2 />
+            <Page2 getOptionsItems={this.getOptionsItems} />
           ) : this.state.page === 3 ? (
             <Page3 />
           ) : this.state.page === 4 ? (
@@ -55,7 +63,6 @@ class App extends React.Component {
           ) : (
             ""
           )}
-          <Field />
           {this.state.page < 4 ? (
             <div className="button_container">
               <button onClick={this.previousPage}>Previous</button>

@@ -3,8 +3,14 @@ import React from "react";
 const Page3 = props => {
   return (
     <div className="form-group">
-      <label>Page3</label>
-      <input></input>
+      <div className="photo"></div>
+      <label htmlFor="avatar">Avatar</label>
+      <input
+        type="file"
+        className="form-control-file"
+        id="avatar"
+        name="avatar"
+      />
     </div>
   );
 };
