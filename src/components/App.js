@@ -1,6 +1,10 @@
 import React from "react";
 import Field from "./Field";
 import TabsContainer from "./TabsContainer";
+import Page1 from "./Page1";
+import Page2 from "./Page2";
+import Page3 from "./Page3";
+import Page4 from "./Page4";
 
 class App extends React.Component {
   constructor() {
@@ -38,8 +42,21 @@ class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <form className="form form_one">
+        <form className="form">
           <TabsContainer />
+          { if(this.state.page === 1){
+            <Page1 />
+          }
+          if(this.state.page === 2){
+            <Page2 />
+          }
+          if(this.state.page === 3){
+            <Page3 />
+          }
+          if(this.state.page === 4){
+            <Page4 />
+          }
+          }
           <Field />
           {this.state.page < 4 ? (
             <div className="button_container">
@@ -48,7 +65,7 @@ class App extends React.Component {
             </div>
           ) : (
             <div className="button_container">
-              <button onClick={this.previousPage}>Reset</button>
+              <button onClick={this.reset}>Reset</button>
             </div>
           )}
 
