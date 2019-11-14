@@ -4,7 +4,6 @@ import Page1 from "./Page1";
 import Page2 from "./Page2";
 import Page3 from "./Page3";
 import Page4 from "./Page4";
-import cities from "../data/cities";
 
 class App extends React.Component {
   constructor() {
@@ -94,15 +93,18 @@ class App extends React.Component {
   };
 
   getOptionsItemsCities = items => {
-    console.log(items[1].country);
-    console.log(+this.state.country);
     const citiesArr = [];
-    for (let i = 1; i < items.length; i++) {
-      if (items[i].country === +this.state.country) {
-        citiesArr.push(items[i].name);
+    for (let key in items) {
+      if (items[key].country === +this.state.country) {
+        citiesArr.push(items[key].name);
       }
     }
     console.log(citiesArr);
+    return citiesArr.map(item => (
+      <option key={item} value={item}>
+        {item}
+      </option>
+    ));
   };
 
   onChange = event => {
@@ -115,7 +117,6 @@ class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <div>{this.getOptionsItemsCities(cities)}</div>
         <form className="form">
           <TabsContainer page={this.state.page} />
           {this.state.page === 1 ? (
@@ -123,6 +124,7 @@ class App extends React.Component {
           ) : this.state.page === 2 ? (
             <Page2
               getOptionsItems={this.getOptionsItems}
+              getOptionsItemsCities={this.getOptionsItemsCities}
               onChange={this.onChange}
               appState={this.state}
             />

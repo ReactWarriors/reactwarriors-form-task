@@ -4,7 +4,7 @@ import countries from "../data/countries";
 import cities from "../data/cities";
 
 const Page2 = props => {
-  const { getOptionsItems, appState } = props;
+  const { getOptionsItems, appState, getOptionsItemsCities } = props;
   return (
     <div className="form-group">
       <Field
@@ -48,7 +48,7 @@ const Page2 = props => {
         value={appState.city}
         onChange={props.onChange}
       >
-        <option>Select city</option>
+        {getOptionsItemsCities(cities)}
       </select>
     </div>
   );
