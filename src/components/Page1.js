@@ -2,6 +2,7 @@ import React from "react";
 import Field from "./Field";
 
 const Page1 = props => {
+  const { appState } = props;
   return (
     <div className="form-group">
       <Field
@@ -10,6 +11,9 @@ const Page1 = props => {
         type="text"
         placeholder="Enter firstname"
         name="firstname"
+        value={appState.firstname}
+        onChange={props.onChange}
+        appState={appState}
       />
       <Field
         id="lastname"
@@ -17,6 +21,9 @@ const Page1 = props => {
         type="text"
         placeholder="Enter Lastname"
         name="lastname"
+        value={appState.lastname}
+        onChange={props.onChange}
+        appState={appState}
       />
       <Field
         id="password"
@@ -24,6 +31,9 @@ const Page1 = props => {
         type="password"
         placeholder="Enter password"
         name="password"
+        value={appState.password}
+        onChange={props.onChange}
+        appState={appState}
       />
       <Field
         id="repeatPassword"
@@ -31,6 +41,9 @@ const Page1 = props => {
         type="password"
         placeholder="Repeat password"
         name="repeatPassword"
+        value={appState.repeatPassword}
+        onChange={props.onChange}
+        appState={appState}
       />
       <fieldset className="form-group">
         <div>Gender</div>

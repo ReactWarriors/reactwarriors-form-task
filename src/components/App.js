@@ -1,5 +1,4 @@
 import React from "react";
-import Field from "./Field";
 import TabsContainer from "./TabsContainer";
 import Page1 from "./Page1";
 import Page2 from "./Page2";
@@ -10,12 +9,55 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      page: 1
+      page: 1,
+      firstname: "",
+      lastname: "",
+      password: "",
+      repeatPassword: "",
+      country: "1",
+      gender: "male",
+      agree: true,
+      avatar: "",
+      age: 0,
+      errors: {
+        firstname: false,
+        password: false,
+        repeatPassword: false,
+        age: false
+      }
     };
   }
 
   nextPage = event => {
     event.preventDefault();
+    const errors = {};
+    if (this.state.firstname.length < 5) {
+      errors.firtsname = "Must be 5 characters or more";
+    }
+
+    if (this.state.lastname.length < 5) {
+      errors.lastname = "Must be 5 characters or more";
+    }
+
+    if (this.state.password < 3) {
+      errors.password = "Must be 3 characters or more";
+    }
+
+    if (this.state.password !== this.state.repeatPassword) {
+      errors.repeatPassword = "Must be equal password";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      this.setState({
+        errors: errors
+      });
+    } else {
+      this.setState({
+        errors: false
+      });
+      console.log("submit", this.state);
+    }
+
     if (this.state.page < 4) {
       this.setState({
         page: this.state.page + 1
@@ -47,13 +89,20 @@ class App extends React.Component {
     ));
   };
 
+  onChange = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+    console.log(event.target.value);
+  };
+
   render() {
     return (
       <div className="container">
         <form className="form">
           <TabsContainer page={this.state.page} />
           {this.state.page === 1 ? (
-            <Page1 />
+            <Page1 onChange={this.onChange} appState={this.state} />
           ) : this.state.page === 2 ? (
             <Page2 getOptionsItems={this.getOptionsItems} />
           ) : this.state.page === 3 ? (

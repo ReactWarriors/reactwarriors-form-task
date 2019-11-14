@@ -9,7 +9,7 @@ const Field = props => {
     name,
     value,
     onChange,
-    error
+    appState
   } = props;
   return (
     <div className="form-group">
@@ -23,7 +23,7 @@ const Field = props => {
         value={value}
         onChange={onChange}
       />
-      {error ? <div className="invalid-feedback">{error}</div> : null}
+      {/*{error ? <div className="invalid-feedback">{error}</div> : null}*/}
     </div>
   );
 };
