@@ -54,6 +54,8 @@ const Page1 = props => {
             id="male"
             name="gender"
             value="male"
+            checked={appState.gender === "male"}
+            onChange={props.onChange}
           />
           <label className="form-check-label" htmlFor="male">
             Male
@@ -66,6 +68,8 @@ const Page1 = props => {
             id="female"
             name="gender"
             value="female"
+            checked={appState.gender === "female"}
+            onChange={props.onChange}
           />
           <label className="form-check-label" htmlFor="female">
             Female

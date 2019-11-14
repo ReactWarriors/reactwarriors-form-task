@@ -4,6 +4,7 @@ import Page1 from "./Page1";
 import Page2 from "./Page2";
 import Page3 from "./Page3";
 import Page4 from "./Page4";
+import cities from "../data/cities";
 
 class App extends React.Component {
   constructor() {
@@ -14,16 +15,19 @@ class App extends React.Component {
       lastname: "",
       password: "",
       repeatPassword: "",
+      email: "",
+      mobile: "",
       country: "1",
-      gender: "male",
+      city: "1",
+      gender: "female",
       agree: true,
       avatar: "",
       age: 0,
       errors: {
         firstname: false,
+        lasttname: false,
         password: false,
-        repeatPassword: false,
-        age: false
+        repeatPassword: false
       }
     };
   }
@@ -89,6 +93,18 @@ class App extends React.Component {
     ));
   };
 
+  getOptionsItemsCities = items => {
+    console.log(items[1].country);
+    console.log(+this.state.country);
+    const citiesArr = [];
+    for (let i = 1; i < items.length; i++) {
+      if (items[i].country === +this.state.country) {
+        citiesArr.push(items[i].name);
+      }
+    }
+    console.log(citiesArr);
+  };
+
   onChange = event => {
     this.setState({
       [event.target.name]: event.target.value
@@ -99,16 +115,21 @@ class App extends React.Component {
   render() {
     return (
       <div className="container">
+        <div>{this.getOptionsItemsCities(cities)}</div>
         <form className="form">
           <TabsContainer page={this.state.page} />
           {this.state.page === 1 ? (
             <Page1 onChange={this.onChange} appState={this.state} />
           ) : this.state.page === 2 ? (
-            <Page2 getOptionsItems={this.getOptionsItems} />
+            <Page2
+              getOptionsItems={this.getOptionsItems}
+              onChange={this.onChange}
+              appState={this.state}
+            />
           ) : this.state.page === 3 ? (
-            <Page3 />
+            <Page3 onChange={this.onChange} appState={this.state} />
           ) : this.state.page === 4 ? (
-            <Page4 />
+            <Page4 onChange={this.onChange} appState={this.state} />
           ) : (
             ""
           )}
