@@ -14,6 +14,7 @@ const Page1 = props => {
         value={appState.firstname}
         onChange={props.onChange}
         appState={appState}
+        error={appState.errors.firstname}
       />
       <Field
         id="lastname"

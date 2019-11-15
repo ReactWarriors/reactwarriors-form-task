@@ -60,11 +60,11 @@ class App extends React.Component {
       });
     }
 
-    if (this.state.page < 4) {
+    /*if (this.state.page < 4) {
       this.setState({
         page: this.state.page + 1
       });
-    }
+    }*/
   };
 
   previousPage = event => {
