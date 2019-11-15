@@ -1,16 +1,7 @@
 import React from "react";
 
 const Field = props => {
-  const {
-    id,
-    labelText,
-    type,
-    placeholder,
-    name,
-    value,
-    onChange,
-    appState
-  } = props;
+  const { id, labelText, type, placeholder, name, value, onChange } = props;
   return (
     <div className="form-group">
       <label htmlFor={id}>{labelText}</label>

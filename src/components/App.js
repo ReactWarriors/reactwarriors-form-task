@@ -16,8 +16,8 @@ class App extends React.Component {
       repeatPassword: "",
       email: "",
       mobile: "",
-      country: "1",
-      city: "1",
+      country: "Ukraine",
+      city: "Dnipro",
       gender: "female",
       agree: true,
       avatar: "",
@@ -58,7 +58,6 @@ class App extends React.Component {
       this.setState({
         errors: false
       });
-      console.log("submit", this.state);
     }
 
     if (this.state.page < 4) {
@@ -99,7 +98,6 @@ class App extends React.Component {
         citiesArr.push(items[key].name);
       }
     }
-    console.log(citiesArr);
     return citiesArr.map(item => (
       <option key={item} value={item}>
         {item}
@@ -111,7 +109,16 @@ class App extends React.Component {
     this.setState({
       [event.target.name]: event.target.value
     });
-    console.log(event.target.value);
+  };
+
+  onChangeAvatar = event => {
+    const reader = new FileReader();
+    reader.onload = event => {
+      this.setState({
+        avatar: event.target.result
+      });
+    };
+    reader.readAsDataURL(event.target.files[0]);
   };
 
   render() {
@@ -129,7 +136,11 @@ class App extends React.Component {
               appState={this.state}
             />
           ) : this.state.page === 3 ? (
-            <Page3 onChange={this.onChange} appState={this.state} />
+            <Page3
+              name="avatar"
+              onChangeAvatar={this.onChangeAvatar}
+              appState={this.state}
+            />
           ) : this.state.page === 4 ? (
             <Page4 onChange={this.onChange} appState={this.state} />
           ) : (
