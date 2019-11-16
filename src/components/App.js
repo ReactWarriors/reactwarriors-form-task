@@ -34,6 +34,12 @@ class App extends React.Component {
   }
 
   validation = errors => {
+    let fieldValidationErrors = this.state.formErrors;
+    let emailValid = this.state.emailValid;
+    let mobileValid = this.state.mobileValid;
+    if (this.state.email) {
+      emailValid = this.state.email.mat;
+    }
     if (this.state.firstname.length < 5) {
       errors.firstname = "Must be 5 characters or more";
     }
@@ -53,8 +59,8 @@ class App extends React.Component {
 
   nextPage = event => {
     event.preventDefault();
-
-    this.validation(errors, value);
+    const errors = {};
+    this.validation(errors);
 
     if (Object.keys(errors).length > 0) {
       this.setState({
