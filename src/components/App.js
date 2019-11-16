@@ -16,8 +16,8 @@ class App extends React.Component {
       repeatPassword: "",
       email: "",
       mobile: "",
-      country: "Ukraine",
-      city: "Dnipro",
+      country: "",
+      city: "",
       gender: "female",
       avatar: "",
       errors: {
@@ -34,6 +34,9 @@ class App extends React.Component {
   }
 
   validation = errors => {
+    /*if (!/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i.test(this.state.email)) {
+      errors.email = "Ivalid email";
+    }*/
     if (this.state.firstname.length < 5) {
       errors.firstname = "Must be 5 characters or more";
     }
