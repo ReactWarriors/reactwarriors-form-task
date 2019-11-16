@@ -16,6 +16,7 @@ const Page2 = props => {
         value={appState.email}
         onChange={props.onChange}
         appState={appState}
+        error={appState.errors.email}
       />
 
       <Field

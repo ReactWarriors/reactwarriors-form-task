@@ -25,6 +25,7 @@ const Page1 = props => {
         value={appState.lastname}
         onChange={props.onChange}
         appState={appState}
+        error={appState.errors.lastname}
       />
       <Field
         id="password"
@@ -35,6 +36,7 @@ const Page1 = props => {
         value={appState.password}
         onChange={props.onChange}
         appState={appState}
+        error={appState.errors.password}
       />
       <Field
         id="repeatPassword"
@@ -45,6 +47,7 @@ const Page1 = props => {
         value={appState.repeatPassword}
         onChange={props.onChange}
         appState={appState}
+        error={appState.errors.repeatPassword}
       />
       <fieldset className="form-group">
         <div>Gender</div>

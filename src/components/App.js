@@ -19,23 +19,23 @@ class App extends React.Component {
       country: "Ukraine",
       city: "Dnipro",
       gender: "female",
-      agree: true,
       avatar: "",
-      age: 0,
       errors: {
         firstname: false,
         lasttname: false,
         password: false,
-        repeatPassword: false
-      }
+        repeatPassword: false,
+        email: false,
+        mobile: false
+      },
+      emailValid: false,
+      mobiledValid: false
     };
   }
 
-  nextPage = event => {
-    event.preventDefault();
-    const errors = {};
+  validation = errors => {
     if (this.state.firstname.length < 5) {
-      errors.firtsname = "Must be 5 characters or more";
+      errors.firstname = "Must be 5 characters or more";
     }
 
     if (this.state.lastname.length < 5) {
@@ -49,6 +49,12 @@ class App extends React.Component {
     if (this.state.password !== this.state.repeatPassword) {
       errors.repeatPassword = "Must be equal password";
     }
+  };
+
+  nextPage = event => {
+    event.preventDefault();
+
+    this.validation(errors, value);
 
     if (Object.keys(errors).length > 0) {
       this.setState({
@@ -60,11 +66,11 @@ class App extends React.Component {
       });
     }
 
-    /*if (this.state.page < 4) {
+    if (this.state.page < 4 && this.state.errors === false) {
       this.setState({
         page: this.state.page + 1
       });
-    }*/
+    }
   };
 
   previousPage = event => {
