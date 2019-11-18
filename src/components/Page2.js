@@ -28,6 +28,7 @@ const Page2 = props => {
         value={appState.mobile}
         onChange={props.onChange}
         appState={appState}
+        error={appState.errors.mobile}
       />
 
       <label htmlFor="country">Country</label>

@@ -19,6 +19,9 @@ const Page3 = props => {
         name="avatar"
         onChange={onChangeAvatar}
       />
+      {appState.errors.avatar ? (
+        <div className="error">{appState.errors.avatar}</div>
+      ) : null}
     </div>
   );
 };

@@ -23,7 +23,7 @@ const Field = props => {
         value={value}
         onChange={onChange}
       />
-      {true ? <div className="error">{error}</div> : null}
+      {error ? <div className="error">{error}</div> : null}
     </div>
   );
 };

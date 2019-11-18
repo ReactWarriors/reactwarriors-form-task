@@ -17,40 +17,46 @@ class App extends React.Component {
       email: "",
       mobile: "",
       country: "",
+      countryName: "",
       city: "",
       gender: "female",
       avatar: "",
-      errors: {
-        firstname: false,
-        lasttname: false,
-        password: false,
-        repeatPassword: false,
-        email: false,
-        mobile: false
-      },
+      errors: {},
       emailValid: false,
       mobiledValid: false
     };
   }
 
   validation = errors => {
-    /*if (!/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i.test(this.state.email)) {
-      errors.email = "Ivalid email";
-    }*/
-    if (this.state.firstname.length < 5) {
-      errors.firstname = "Must be 5 characters or more";
-    }
+    if (this.state.page === 1) {
+      if (this.state.firstname.length < 5) {
+        errors.firstname = "Must be 5 characters or more";
+      }
 
-    if (this.state.lastname.length < 5) {
-      errors.lastname = "Must be 5 characters or more";
-    }
+      if (this.state.lastname.length < 5) {
+        errors.lastname = "Must be 5 characters or more";
+      }
 
-    if (this.state.password < 3) {
-      errors.password = "Must be 3 characters or more";
-    }
+      if (this.state.password < 3) {
+        errors.password = "Must be 3 characters or more";
+      }
 
-    if (this.state.password !== this.state.repeatPassword) {
-      errors.repeatPassword = "Must be equal password";
+      if (this.state.password !== this.state.repeatPassword) {
+        errors.repeatPassword = "Must be equal password";
+      }
+    }
+    if (this.state.page === 2) {
+      if (!/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i.test(this.state.email)) {
+        errors.email = "Ivalid email";
+      }
+      if (!/^\d+$/.test(this.state.mobile)) {
+        errors.mobile = "Ivalid mobile";
+      }
+    }
+    if (this.state.page === 3) {
+      if (!this.state.avatar) {
+        errors.avatar = "Choose image";
+      }
     }
   };
 
@@ -65,7 +71,8 @@ class App extends React.Component {
       });
     } else {
       this.setState({
-        page: this.state.page + 1
+        page: this.state.page + 1,
+        errors: {}
       });
     }
   };
@@ -87,11 +94,19 @@ class App extends React.Component {
   };
 
   getOptionsItems = items => {
-    return items.map(item => (
-      <option key={item.id} value={item.id}>
-        {item.name}
+    const defaultOption = (
+      <option key={0} value={"Select country"}>
+        Select country
       </option>
-    ));
+    );
+    return [
+      defaultOption,
+      ...items.map(item => (
+        <option key={item.id} value={item.id}>
+          {item.name}
+        </option>
+      ))
+    ];
   };
 
   getOptionsItemsCities = items => {
@@ -112,6 +127,7 @@ class App extends React.Component {
     this.setState({
       [event.target.name]: event.target.value
     });
+    console.log(event.target.value);
   };
 
   onChangeAvatar = event => {
