@@ -65,12 +65,6 @@ class App extends React.Component {
       });
     } else {
       this.setState({
-        errors: false
-      });
-    }
-
-    if (this.state.page < 4 && this.state.errors === false) {
-      this.setState({
         page: this.state.page + 1
       });
     }
