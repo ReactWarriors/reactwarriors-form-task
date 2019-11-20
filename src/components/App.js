@@ -16,7 +16,7 @@ class App extends React.Component {
       repeatPassword: "",
       email: "",
       mobile: "",
-      country: "",
+      country: "Select country",
       countryName: "",
       city: "",
       gender: "female",
@@ -51,6 +51,9 @@ class App extends React.Component {
       }
       if (!/^\d+$/.test(this.state.mobile)) {
         errors.mobile = "Ivalid mobile";
+      }
+      if (this.state.country === "Select country") {
+        errors.country = "Select country";
       }
     }
     if (this.state.page === 3) {

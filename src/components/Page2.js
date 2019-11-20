@@ -41,7 +41,9 @@ const Page2 = props => {
       >
         {getOptionsItems(countries)}
       </select>
-
+      {appState.errors.country ? (
+        <div className="error">{appState.errors.country}</div>
+      ) : null}
       <label htmlFor="city">City</label>
       <select
         className="form-control"

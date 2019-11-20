@@ -1,4 +1,5 @@
 import React from "react";
+import countries from "../data/countries";
 
 const Page4 = props => {
   const { appState } = props;
@@ -10,7 +11,9 @@ const Page4 = props => {
       <div>{`${appState.firstname} ${appState.lastname}`}</div>
       <div>{`Email: ${appState.email}`}</div>
       <div>{`Mobile: ${appState.mobile}`}</div>
-      <div>{`Location: ${appState.country}, ${appState.city}`}</div>
+      <div>{`Location: ${countries[appState.country - 1].name}, ${
+        appState.city
+      }`}</div>
     </div>
   );
 };
