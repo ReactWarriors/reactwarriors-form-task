@@ -21,9 +21,7 @@ class App extends React.Component {
       city: "",
       gender: "female",
       avatar: "",
-      errors: {},
-      emailValid: false,
-      mobiledValid: false
+      errors: {}
     };
   }
 
@@ -92,7 +90,19 @@ class App extends React.Component {
   reset = event => {
     event.preventDefault();
     this.setState({
-      page: 1
+      page: 1,
+      firstname: "",
+      lastname: "",
+      password: "",
+      repeatPassword: "",
+      email: "",
+      mobile: "",
+      country: "Select country",
+      countryName: "",
+      city: "",
+      gender: "female",
+      avatar: "",
+      errors: {}
     });
   };
 
