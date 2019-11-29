@@ -1,10 +1,16 @@
 import React from "react";
-import Field from "./Field";
-import countries from "../data/countries";
-import cities from "../data/cities";
+import Field from "../Field";
+import countries from "../../data/countries";
+import cities from "../../data/cities";
 
-const Page2 = props => {
-  const { getOptionsItems, appState, getOptionsItemsCities } = props;
+const Main = props => {
+  const {
+    value,
+    onChange,
+    errors,
+    getOptionsItems,
+    getOptionsItemsCities
+  } = props;
   return (
     <div className="form-group">
       <Field
@@ -13,10 +19,9 @@ const Page2 = props => {
         type="email"
         placeholder="email"
         name="email"
-        value={appState.email}
-        onChange={props.onChange}
-        appState={appState}
-        error={appState.errors.email}
+        value={value.email}
+        onChange={onChange}
+        error={errors.email}
       />
 
       <Field
@@ -25,10 +30,9 @@ const Page2 = props => {
         type="tel"
         placeholder="Enter Mobile"
         name="mobile"
-        value={appState.mobile}
-        onChange={props.onChange}
-        appState={appState}
-        error={appState.errors.mobile}
+        value={value.mobile}
+        onChange={onChange}
+        error={errors.mobile}
       />
 
       <label htmlFor="country">Country</label>
@@ -36,20 +40,18 @@ const Page2 = props => {
         className="form-control"
         id="country"
         name="country"
-        value={appState.country}
-        onChange={props.onChange}
+        value={value.country}
+        onChange={onChange}
       >
         {getOptionsItems(countries)}
       </select>
-      {appState.errors.country ? (
-        <div className="error">{appState.errors.country}</div>
-      ) : null}
+      {errors.country ? <div className="error">{errors.country}</div> : null}
       <label htmlFor="city">City</label>
       <select
         className="form-control"
         id="city"
         name="city"
-        value={appState.city}
+        value={value.city}
         onChange={props.onChange}
       >
         {getOptionsItemsCities(cities)}
@@ -58,4 +60,4 @@ const Page2 = props => {
   );
 };
 
-export default Page2;
+export default Main;

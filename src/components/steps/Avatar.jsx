@@ -1,14 +1,14 @@
 import React from "react";
 
-const Page3 = props => {
-  const { onChangeAvatar, appState } = props;
+const Avatar = props => {
+  const { value, onChangeAvatar, errors } = props;
   return (
     <div className="form-group">
-      {appState.avatar === "" ? (
+      {value.avatar === "" ? (
         <div className="photoPlaceholder"></div>
       ) : (
         <div className="photo">
-          <img src={appState.avatar} className="photoImg" alt={"img"} />
+          <img src={value.avatar} className="photoImg" alt={"img"} />
         </div>
       )}
       <label htmlFor="avatar">Avatar</label>
@@ -19,11 +19,9 @@ const Page3 = props => {
         name="avatar"
         onChange={onChangeAvatar}
       />
-      {appState.errors.avatar ? (
-        <div className="error">{appState.errors.avatar}</div>
-      ) : null}
+      {errors.avatar ? <div className="error">{errors.avatar}</div> : null}
     </div>
   );
 };
 
-export default Page3;
+export default Avatar;

@@ -1,8 +1,8 @@
 import React from "react";
-import Field from "./Field";
+import Field from "../Field";
 
-const Page1 = props => {
-  const { appState } = props;
+const Basic = props => {
+  const { value, errors, onChange } = props;
   return (
     <div className="form-group">
       <Field
@@ -11,10 +11,9 @@ const Page1 = props => {
         type="text"
         placeholder="Enter firstname"
         name="firstname"
-        value={appState.firstname}
-        onChange={props.onChange}
-        appState={appState}
-        error={appState.errors.firstname}
+        value={value.firstname}
+        onChange={onChange}
+        error={errors.firstname}
       />
       <Field
         id="lastname"
@@ -22,10 +21,9 @@ const Page1 = props => {
         type="text"
         placeholder="Enter Lastname"
         name="lastname"
-        value={appState.lastname}
-        onChange={props.onChange}
-        appState={appState}
-        error={appState.errors.lastname}
+        value={value.lastname}
+        onChange={onChange}
+        error={errors.lastname}
       />
       <Field
         id="password"
@@ -33,10 +31,9 @@ const Page1 = props => {
         type="password"
         placeholder="Enter password"
         name="password"
-        value={appState.password}
-        onChange={props.onChange}
-        appState={appState}
-        error={appState.errors.password}
+        value={value.password}
+        onChange={onChange}
+        error={errors.password}
       />
       <Field
         id="repeatPassword"
@@ -44,10 +41,9 @@ const Page1 = props => {
         type="password"
         placeholder="Repeat password"
         name="repeatPassword"
-        value={appState.repeatPassword}
-        onChange={props.onChange}
-        appState={appState}
-        error={appState.errors.repeatPassword}
+        value={value.repeatPassword}
+        onChange={onChange}
+        error={errors.repeatPassword}
       />
       <fieldset className="form-group">
         <div>Gender</div>
@@ -58,8 +54,8 @@ const Page1 = props => {
             id="male"
             name="gender"
             value="male"
-            checked={appState.gender === "male"}
-            onChange={props.onChange}
+            checked={value.gender === "male"}
+            onChange={onChange}
           />
           <label className="form-check-label" htmlFor="male">
             Male
@@ -72,8 +68,8 @@ const Page1 = props => {
             id="female"
             name="gender"
             value="female"
-            checked={appState.gender === "female"}
-            onChange={props.onChange}
+            checked={value.gender === "female"}
+            onChange={onChange}
           />
           <label className="form-check-label" htmlFor="female">
             Female
@@ -84,4 +80,4 @@ const Page1 = props => {
   );
 };
 
-export default Page1;
+export default Basic;
