@@ -19,8 +19,7 @@ class App extends React.Component {
         email: "",
         mobile: "",
         country: "Select country",
-        countryName: "",
-        city: "",
+        city: "Select city",
         gender: "female",
         avatar: ""
       },
@@ -31,41 +30,45 @@ class App extends React.Component {
   }
 
   getErrors = () => {
+    const { page, value } = this.state;
     const errors = {};
     const emailReg = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
     const mobileReg = /^\d+$/;
 
-    switch (this.state.page) {
+    switch (page) {
       case 1:
-        if (this.state.value.firstname.length < 5) {
+        if (value.firstname.length < 5) {
           errors.firstname = "Must be 5 characters or more";
         }
 
-        if (this.state.value.lastname.length < 5) {
+        if (value.lastname.length < 5) {
           errors.lastname = "Must be 5 characters or more";
         }
 
-        if (this.state.value.password < 3) {
+        if (value.password < 3) {
           errors.password = "Must be 3 characters or more";
         }
 
-        if (this.state.value.password !== this.state.value.repeatPassword) {
+        if (value.password !== value.repeatPassword) {
           errors.repeatPassword = "Must be equal password";
         }
         break;
       case 2:
-        if (!emailReg.test(this.state.value.email)) {
+        if (!emailReg.test(value.email)) {
           errors.email = "Ivalid email";
         }
-        if (!mobileReg.test(this.state.value.mobile)) {
+        if (!mobileReg.test(value.mobile)) {
           errors.mobile = "Invalid mobile";
         }
-        if (this.state.value.country === "Select country") {
+        if (value.country === "Select country") {
           errors.country = "Select country";
+        }
+        if (value.city === "Select city") {
+          errors.city = "Select city";
         }
         break;
       case 3:
-        if (!this.state.value.avatar) {
+        if (!value.avatar) {
           errors.avatar = "Choose image";
         }
         break;
@@ -102,36 +105,6 @@ class App extends React.Component {
     this.setState(this.initialState);
   };
 
-  getOptionsItems = items => {
-    const defaultOption = (
-      <option key={0} value={"Select country"}>
-        Select country
-      </option>
-    );
-    return [
-      defaultOption,
-      ...items.map(item => (
-        <option key={item.id} value={item.id}>
-          {item.name}
-        </option>
-      ))
-    ];
-  };
-
-  getOptionsItemsCities = items => {
-    const citiesArr = [];
-    for (let key in items) {
-      if (items[key].country === +this.state.country) {
-        citiesArr.push(items[key].name);
-      }
-    }
-    return citiesArr.map(item => (
-      <option key={item} value={item}>
-        {item}
-      </option>
-    ));
-  };
-
   onChange = event => {
     event.persist();
     this.setState(state => ({
@@ -157,40 +130,37 @@ class App extends React.Component {
   };
 
   render() {
+    const { value, page, errors } = this.state;
     return (
       <div className="container">
         <form className="form">
-          <TabsContainer page={this.state.page} />
+          <TabsContainer page={page} />
           {this.state.page === 1 && (
-            <Basic
-              onChange={this.onChange}
-              value={this.state.value}
-              errors={this.state.errors}
-            />
+            <Basic onChange={this.onChange} value={value} errors={errors} />
           )}
           {this.state.page === 2 && (
             <Main
               getOptionsItems={this.getOptionsItems}
               getOptionsItemsCities={this.getOptionsItemsCities}
               onChange={this.onChange}
-              value={this.state.value}
-              errors={this.state.errors}
+              value={value}
+              errors={errors}
             />
           )}
           {this.state.page === 3 && (
             <Avatar
               name="avatar"
               onChangeAvatar={this.onChangeAvatar}
-              value={this.state.value}
-              errors={this.state.errors}
+              value={value}
+              errors={errors}
             />
           )}
           {this.state.page === 4 && (
-            <Last onChange={this.onChange} value={this.state.value} />
+            <Last onChange={this.onChange} value={value} />
           )}
           {
             <Buttons
-              page={this.state.page}
+              page={page}
               previousPage={this.previousPage}
               nextPage={this.nextPage}
               onReset={this.onReset}
