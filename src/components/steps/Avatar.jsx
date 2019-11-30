@@ -8,7 +8,7 @@ const Avatar = props => {
         <div className="photoPlaceholder"></div>
       ) : (
         <div className="photo">
-          <img src={value.avatar} className="photoImg" alt={"img"} />
+          <img src={value.avatar} className="photoImg" alt="img" />
         </div>
       )}
       <label htmlFor="avatar">Avatar</label>

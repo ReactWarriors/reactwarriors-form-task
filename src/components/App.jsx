@@ -83,18 +83,18 @@ class App extends React.Component {
         errors: errors
       });
     } else {
-      this.setState({
-        page: this.state.page + 1,
+      this.setState(state => ({
+        page: state.page + 1,
         errors: {}
-      });
+      }));
     }
   };
 
   previousPage = event => {
     event.preventDefault();
-    this.setState({
-      page: this.state.page - 1
-    });
+    this.setState(state => ({
+      page: state.page - 1
+    }));
   };
 
   onReset = event => {
