@@ -11,6 +11,12 @@ class App extends React.Component {
     super();
     this.initialState = {
       page: 1,
+      steps: [
+        { isActive: true, isComplited: false, name: "Basic" },
+        { isActive: false, isComplited: false, name: "Contacts" },
+        { isActive: false, isComplited: false, name: "Avatar" },
+        { isActive: false, isComplited: false, name: "Finish" }
+      ],
       value: {
         firstname: "",
         lastname: "",
@@ -130,11 +136,11 @@ class App extends React.Component {
   };
 
   render() {
-    const { value, page, errors } = this.state;
+    const { value, page, errors, steps } = this.state;
     return (
       <div className="form-container card">
         <form className="form card-body">
-          <TabsContainer page={page} />
+          <TabsContainer page={page} steps={steps} />
           {this.state.page === 1 && (
             <Basic onChange={this.onChange} value={value} errors={errors} />
           )}

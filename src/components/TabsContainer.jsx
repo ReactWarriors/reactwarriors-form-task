@@ -10,7 +10,7 @@ class TabsContainer extends React.Component {
               this.props.page === 1 ? "active" : "tabs-container__item"
             }
           >
-            1
+            <p className="tabNumber">1</p>
           </div>
           <p className="tabs-container__title">Basic</p>
         </div>
@@ -21,7 +21,7 @@ class TabsContainer extends React.Component {
               this.props.page === 2 ? "active" : "tabs-container__item"
             }
           >
-            2
+            <p className="tabNumber">2</p>
           </div>
           <p className="tabs-container__title">Contacts</p>
         </div>
@@ -32,7 +32,7 @@ class TabsContainer extends React.Component {
               this.props.page === 3 ? "active" : "tabs-container__item"
             }
           >
-            3
+            <p className="tabNumber">3</p>
           </div>
           <p className="tabs-container__title">Avatar</p>
         </div>
@@ -43,7 +43,7 @@ class TabsContainer extends React.Component {
               this.props.page === 4 ? "active" : "tabs-container__item"
             }
           >
-            4
+            <p className="tabNumber">4</p>
           </div>
           <p className="tabs-container__title">Finish</p>
         </div>

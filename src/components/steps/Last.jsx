@@ -21,7 +21,7 @@ class Last extends React.Component {
     return (
       <div className="form_container">
         <div className="img-name-container">
-          <img src={value.avatar} width={70} height={100} alt={"img"} />
+          <img src={value.avatar} width={100} height={130} alt={"img"} />
           <div className="img-name-container__tittle">{`${value.firstname} ${value.lastname}`}</div>
         </div>
 
