@@ -20,10 +20,11 @@ class Last extends React.Component {
     const { value } = this.props;
     return (
       <div className="form_container">
-        <div>
+        <div className="img-name-container">
           <img src={value.avatar} width={70} height={100} alt={"img"} />
+          <div className="img-name-container__tittle">{`${value.firstname} ${value.lastname}`}</div>
         </div>
-        <div>{`${value.firstname} ${value.lastname}`}</div>
+
         <div>{`Email: ${value.email}`}</div>
         <div>{`Mobile: ${value.mobile}`}</div>
         <div>{`Location: ${this.getCountry(countries)}, ${this.getCity(

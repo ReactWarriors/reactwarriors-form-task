@@ -6,15 +6,23 @@ const Buttons = props => {
   return (
     <div className="button_container">
       {page < 4 ? (
-        <div className="button_container">
-          <button onClick={previousPage} disabled={page === 1}>
+        <div className="d-flex justify-content-center">
+          <button
+            onClick={previousPage}
+            disabled={page === 1}
+            className="btn btn-light mr-4"
+          >
             Previous
           </button>
-          <button onClick={nextPage}>Next</button>
+          <button onClick={nextPage} className="btn btn-secondary">
+            Next
+          </button>
         </div>
       ) : (
-        <div className="button_container">
-          <button onClick={reset}>Reset</button>
+        <div className="d-flex justify-content-center">
+          <button onClick={reset} className="btn btn-primary mt-4">
+            Reset
+          </button>
         </div>
       )}
     </div>

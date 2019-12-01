@@ -132,8 +132,8 @@ class App extends React.Component {
   render() {
     const { value, page, errors } = this.state;
     return (
-      <div className="container">
-        <form className="form">
+      <div className="form-container card">
+        <form className="form card-body">
           <TabsContainer page={page} />
           {this.state.page === 1 && (
             <Basic onChange={this.onChange} value={value} errors={errors} />
