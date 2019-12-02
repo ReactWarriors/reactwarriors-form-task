@@ -20,7 +20,7 @@ class Avatar extends React.Component {
 
         <input
           type="file"
-          className="form-control-file"
+          className="form-control-file avatar"
           id="avatar"
           name="avatar"
           onChange={onChangeAvatar}

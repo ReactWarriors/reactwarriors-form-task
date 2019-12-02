@@ -11,12 +11,6 @@ class App extends React.Component {
     super();
     this.initialState = {
       page: 1,
-      steps: [
-        { isActive: true, isComplited: false, name: "Basic" },
-        { isActive: false, isComplited: false, name: "Contacts" },
-        { isActive: false, isComplited: false, name: "Avatar" },
-        { isActive: false, isComplited: false, name: "Finish" }
-      ],
       value: {
         firstname: "",
         lastname: "",

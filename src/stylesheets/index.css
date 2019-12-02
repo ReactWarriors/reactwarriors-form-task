@@ -54,6 +54,17 @@ body {
   border: 3px solid orangered;
 }
 
+.is-complited {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: orangered;
+  text-align: center;
+  color: #fff;
+  font-weight: bolder;
+  font-size: 18px;
+}
+
 .form-container {
   position: absolute;
   top: 50%;
@@ -88,4 +99,9 @@ body {
 .img-name-container__tittle {
   margin-left: 40px;
   font-weight: bold;
+}
+
+input.avatar {
+  margin: auto;
+  width: 80%;
 }
