@@ -6,7 +6,7 @@ class Last extends React.Component {
   getCountry = countries => {
     let stateCountry = this.props.value.country;
     let country = countries.find(country => country.id == stateCountry);
-    return country.name;
+    return country ? country.name : null;
   };
   getCity = cities => {
     let stateCity = this.props.value.city;

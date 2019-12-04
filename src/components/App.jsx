@@ -72,6 +72,8 @@ class App extends React.Component {
           errors.avatar = "Choose image";
         }
         break;
+      default:
+        break;
     }
 
     return errors;
@@ -115,20 +117,6 @@ class App extends React.Component {
     }));
   };
 
-  onChangeAvatar = event => {
-    const reader = new FileReader();
-    event.persist();
-    reader.onload = event => {
-      this.setState(state => ({
-        value: {
-          ...state.value,
-          avatar: event.target.result
-        }
-      }));
-    };
-    reader.readAsDataURL(event.target.files[0]);
-  };
-
   render() {
     const { value, page, errors, steps } = this.state;
     return (
@@ -148,12 +136,7 @@ class App extends React.Component {
             />
           )}
           {this.state.page === 3 && (
-            <Avatar
-              name="avatar"
-              onChangeAvatar={this.onChangeAvatar}
-              value={value}
-              errors={errors}
-            />
+            <Avatar onChange={this.onChange} value={value} errors={errors} />
           )}
           {this.state.page === 4 && (
             <Last onChange={this.onChange} value={value} />

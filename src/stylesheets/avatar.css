@@ -1,0 +1,25 @@
+.photoPlaceholder {
+  margin: auto;
+  width: 80%;
+  height: 300px;
+  margin-bottom: 40px;
+}
+
+.photoPlaceholder img {
+  width: 100%;
+  height: 100%;
+}
+
+.img-name-container {
+  display: flex;
+}
+
+.img-name-container__tittle {
+  margin-left: 40px;
+  font-weight: bold;
+}
+
+input.avatar {
+  margin: auto;
+  width: 80%;
+}

@@ -1,68 +1,12 @@
+@import "./avatar.css";
+@import "./TabsContainer.css";
+
 * {
   box-sizing: border-box;
 }
 
 body {
   background: #fff;
-}
-
-.tabs-container {
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-}
-
-.tabs-container__tab {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  width: 65px;
-}
-
-.tabs-container__tab:not(:first-child):before {
-  content: "";
-  display: block;
-  background: grey;
-  height: 3px;
-  width: 75px;
-  position: absolute;
-  right: 53px;
-  top: 12px;
-}
-
-.tabs-container__item {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: #b5b5b5;
-  font-size: 18px;
-  text-align: center;
-  color: #fff;
-  font-weight: bolder;
-}
-
-.active {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: aqua;
-  text-align: center;
-  color: #fff;
-  font-weight: bolder;
-  font-size: 18px;
-  border: 3px solid orangered;
-}
-
-.is-complited {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: orangered;
-  text-align: center;
-  color: #fff;
-  font-weight: bolder;
-  font-size: 18px;
 }
 
 .form-container {
@@ -78,30 +22,4 @@ body {
   margin-top: 0.25rem;
   font-size: 80%;
   color: #dc3545;
-}
-
-.photoPlaceholder {
-  margin: auto;
-  width: 80%;
-  height: 300px;
-  margin-bottom: 40px;
-}
-
-.photoPlaceholder img {
-  width: 100%;
-  height: 100%;
-}
-
-.img-name-container {
-  display: flex;
-}
-
-.img-name-container__tittle {
-  margin-left: 40px;
-  font-weight: bold;
-}
-
-input.avatar {
-  margin: auto;
-  width: 80%;
 }
