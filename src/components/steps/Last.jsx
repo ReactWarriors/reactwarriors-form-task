@@ -25,11 +25,24 @@ class Last extends React.Component {
           <div className="img-name-container__tittle">{`${value.firstname} ${value.lastname}`}</div>
         </div>
 
-        <div>{`Email: ${value.email}`}</div>
-        <div>{`Mobile: ${value.mobile}`}</div>
-        <div>{`Location: ${this.getCountry(countries)}, ${this.getCity(
-          cities
-        )}`}</div>
+        <div>
+          <span>
+            <b>Email: </b>
+            {` ${value.email}`}
+          </span>
+        </div>
+        <div>
+          <span>
+            <b>Mobile:</b>
+          </span>
+          {` ${value.mobile}`}
+        </div>
+        <div>
+          <span>
+            <b>Location:</b>
+          </span>
+          {` ${this.getCountry(countries)}, ${this.getCity(cities)}`}
+        </div>
       </div>
     );
   }
