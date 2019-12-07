@@ -17,16 +17,16 @@ class Avatar extends React.Component {
     reader.readAsDataURL(event.target.files[0]);
   };
   render() {
-    const { value, errors } = this.props;
+    const { values, errors } = this.props;
     return (
       <div className="form-group">
-        {value.avatar === "" ? (
+        {values.avatar === "" ? (
           <div className="photoPlaceholder">
             <img src={DefaultAvatar} alt="img" />
           </div>
         ) : (
           <div className="photoPlaceholder">
-            <img src={value.avatar} className="photoImg" alt="img" />
+            <img src={values.avatar} className="photoImg" alt="img" />
           </div>
         )}
 

@@ -2,7 +2,7 @@ import React from "react";
 import Field from "../Field";
 
 const Basic = props => {
-  const { value, errors, onChange } = props;
+  const { values, errors, onChange } = props;
   return (
     <div className="form-group">
       <Field
@@ -11,7 +11,7 @@ const Basic = props => {
         type="text"
         placeholder="Enter firstname"
         name="firstname"
-        value={value.firstname}
+        value={values.firstname}
         onChange={onChange}
         error={errors.firstname}
       />
@@ -21,7 +21,7 @@ const Basic = props => {
         type="text"
         placeholder="Enter Lastname"
         name="lastname"
-        value={value.lastname}
+        value={values.lastname}
         onChange={onChange}
         error={errors.lastname}
       />
@@ -31,7 +31,7 @@ const Basic = props => {
         type="password"
         placeholder="Enter password"
         name="password"
-        value={value.password}
+        value={values.password}
         onChange={onChange}
         error={errors.password}
       />
@@ -41,7 +41,7 @@ const Basic = props => {
         type="password"
         placeholder="Repeat password"
         name="repeatPassword"
-        value={value.repeatPassword}
+        value={values.repeatPassword}
         onChange={onChange}
         error={errors.repeatPassword}
       />
@@ -54,7 +54,7 @@ const Basic = props => {
             id="male"
             name="gender"
             value="male"
-            checked={value.gender === "male"}
+            checked={values.gender === "male"}
             onChange={onChange}
           />
           <label className="form-check-label" htmlFor="male">
@@ -68,7 +68,7 @@ const Basic = props => {
             id="female"
             name="gender"
             value="female"
-            checked={value.gender === "female"}
+            checked={values.gender === "female"}
             onChange={onChange}
           />
           <label className="form-check-label" htmlFor="female">

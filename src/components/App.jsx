@@ -11,7 +11,7 @@ class App extends React.Component {
     super();
     this.initialState = {
       page: 1,
-      value: {
+      values: {
         firstname: "",
         lastname: "",
         password: "",
@@ -30,45 +30,45 @@ class App extends React.Component {
   }
 
   getErrors = () => {
-    const { page, value } = this.state;
+    const { page, values } = this.state;
     const errors = {};
     const emailReg = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
     const mobileReg = /^\d+$/;
 
     switch (page) {
       case 1:
-        if (value.firstname.length < 5) {
+        if (values.firstname.length < 5) {
           errors.firstname = "Must be 5 characters or more";
         }
 
-        if (value.lastname.length < 5) {
+        if (values.lastname.length < 5) {
           errors.lastname = "Must be 5 characters or more";
         }
 
-        if (value.password < 3) {
+        if (values.password < 3) {
           errors.password = "Must be 3 characters or more";
         }
 
-        if (value.password !== value.repeatPassword) {
+        if (values.password !== values.repeatPassword) {
           errors.repeatPassword = "Must be equal password";
         }
         break;
       case 2:
-        if (!emailReg.test(value.email)) {
+        if (!emailReg.test(values.email)) {
           errors.email = "Ivalid email";
         }
-        if (!mobileReg.test(value.mobile)) {
+        if (!mobileReg.test(values.mobile)) {
           errors.mobile = "Invalid mobile";
         }
-        if (value.country === "Select country") {
+        if (values.country === "Select country") {
           errors.country = "Select country";
         }
-        if (value.city === "Select city") {
+        if (values.city === "Select city") {
           errors.city = "Select city";
         }
         break;
       case 3:
-        if (!value.avatar) {
+        if (!values.avatar) {
           errors.avatar = "Choose image";
         }
         break;
@@ -110,36 +110,37 @@ class App extends React.Component {
   onChange = event => {
     event.persist();
     this.setState(state => ({
-      value: {
-        ...state.value,
+      values: {
+        ...state.values,
+        city: event.target.name !== "country" ? state.values.city : "",
         [event.target.name]: event.target.value
       }
     }));
   };
 
   render() {
-    const { value, page, errors, steps } = this.state;
+    const { values, page, errors, steps } = this.state;
     return (
       <div className="form-container card">
         <form className="form card-body">
           <TabsContainer page={page} steps={steps} />
           {this.state.page === 1 && (
-            <Basic onChange={this.onChange} value={value} errors={errors} />
+            <Basic onChange={this.onChange} values={values} errors={errors} />
           )}
           {this.state.page === 2 && (
             <Main
               getOptionsItems={this.getOptionsItems}
               getOptionsItemsCities={this.getOptionsItemsCities}
               onChange={this.onChange}
-              value={value}
+              values={values}
               errors={errors}
             />
           )}
           {this.state.page === 3 && (
-            <Avatar onChange={this.onChange} value={value} errors={errors} />
+            <Avatar onChange={this.onChange} values={values} errors={errors} />
           )}
           {this.state.page === 4 && (
-            <Last onChange={this.onChange} value={value} />
+            <Last onChange={this.onChange} values={values} />
           )}
           {
             <Buttons

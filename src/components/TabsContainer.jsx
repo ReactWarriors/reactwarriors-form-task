@@ -10,7 +10,7 @@ class TabsContainer extends React.Component {
           <div
             key={index}
             className={`tab  ${
-              this.props.page > index + 1 ? "is-complited-line" : ""
+              this.props.page >= index + 1 ? "is-complited-line" : ""
             }`}
           >
             <div

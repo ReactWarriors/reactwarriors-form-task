@@ -23,7 +23,7 @@ export default class Main extends React.Component {
   getOptionsItemsCities = cities => {
     const options = [];
     for (let key in cities) {
-      if (cities[key].country === +this.props.value.country) {
+      if (cities[key].country === +this.props.values.country) {
         options.push({
           id: key,
           name: cities[key].name
@@ -32,7 +32,7 @@ export default class Main extends React.Component {
     }
 
     const defaultOption = (
-      <option key={"Select city"} value={"Select city"}>
+      <option key={0} value="">
         Select city
       </option>
     );
@@ -48,7 +48,7 @@ export default class Main extends React.Component {
   };
 
   render() {
-    const { value, onChange, errors } = this.props;
+    const { values, onChange, errors } = this.props;
     return (
       <div className="form-group">
         <Field
@@ -57,7 +57,7 @@ export default class Main extends React.Component {
           type="email"
           placeholder="email"
           name="email"
-          value={value.email}
+          value={values.email}
           onChange={onChange}
           error={errors.email}
         />
@@ -68,7 +68,7 @@ export default class Main extends React.Component {
           type="tel"
           placeholder="Enter Mobile"
           name="mobile"
-          value={value.mobile}
+          value={values.mobile}
           onChange={onChange}
           error={errors.mobile}
         />
@@ -78,7 +78,7 @@ export default class Main extends React.Component {
           className="form-control"
           id="country"
           name="country"
-          value={value.country}
+          value={values.country}
           onChange={onChange}
         >
           {this.getOptionsItems(countries)}
@@ -90,7 +90,7 @@ export default class Main extends React.Component {
           className="form-control"
           id="city"
           name="city"
-          value={value.city}
+          value={values.city}
           onChange={onChange}
         >
           {this.getOptionsItemsCities(cities)}
